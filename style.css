@@ -1,0 +1,1587 @@
+/* =========================================
+   1. CSS Variables & Theme (APEX CRE Branding)
+   ========================================= */
+:root {
+    --primary-color: #0d1b2a; /* Deep Navy/Black */
+    --secondary-color: #e0a96d; /* Gold/Bronze */
+    --accent-color: #1b263b; /* Lighter Navy */
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --font-main: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* =========================================
+   2. Reset & Base Styles
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-dark);
+    line-height: 1.6;
+    background-color: #f8f9fa;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   3. Navigation (Header)
+   ========================================= */
+.nav-logo {
+    height: 100px; /* Controls how tall the logo is in the menu */
+    width: auto;  /* Ensures the logo doesn't stretch or warp */
+    display: block;
+    border-radius: 4px; /* Optional: Softens the sharp corners of the image */
+}   
+   
+   
+header {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    color: var(--secondary-color);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li a {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.investor-login {
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.investor-login:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+/* =========================================
+   4. Hero Section (Homepage)
+   ========================================= */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--text-light);
+    padding: 0 20px;
+    margin-top: 60px; /* Offset for fixed header */
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 40px;
+    color: #d1d1d1;
+}
+
+.cta-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #c9965d;
+}
+
+/* =========================================
+   5. Metrics Section (Homepage)
+   ========================================= */
+.metrics {
+    display: flex;
+    justify-content: space-around;
+    padding: 80px 50px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.metric-item h2 {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.metric-item p {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #777;
+    letter-spacing: 1.5px;
+}
+
+/* =========================================
+   6. Strategy Section (Homepage)
+   ========================================= */
+.strategy {
+    padding: 100px 50px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    text-align: center;
+}
+
+.strategy h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+}
+
+.strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.strategy-card {
+    background-color: var(--accent-color);
+    padding: 40px 30px;
+    border-radius: 8px;
+    border-top: 4px solid var(--secondary-color);
+}
+
+.strategy-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   7. Team Page Specific Styles
+   ========================================= */
+.page-header {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 150px 20px 80px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.team-section {
+    padding: 80px 50px;
+    background-color: #f8f9fa;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.team-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    border-top: 4px solid var(--primary-color);
+}
+
+/* 
+   THE HEADSHOT IMAGE RESIZER 
+   This perfectly crops and centers your raw images into circles 
+*/
+.headshot {
+    width: 150px;
+    height: 150px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    border: 3px solid var(--secondary-color);
+    
+    /* The magic code that resizes and centers the files */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.team-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.team-card .title {
+    color: var(--secondary-color);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.team-card .bio {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* =========================================
+   8. Footer
+   ========================================= */
+footer {
+    background-color: #080f18;
+    color: #777;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 12px;
+}
+
+footer p {
+    margin-bottom: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================
+   9. Responsive Design (For Mobile Phones)
+   ========================================= */
+@media (max-width: 768px) {
+    nav ul {
+        display: none; /* Hide standard menu on mobile */
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .metrics {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   11. About Us Section (Compact Split Layout)
+   ========================================= */
+.about-us {
+    padding: 60px 50px; /* Reduced padding for a tighter fit */
+    background-color: #ffffff;
+}
+
+.about-split-container {
+    display: flex;
+    align-items: stretch; 
+    gap: 40px; /* Tighter gap between text and image */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-text-content {
+    flex: 1.1; /* Gives slightly more room to the text */
+    text-align: left;
+    padding-right: 20px;
+}
+
+.about-text-content p {
+    font-size: 0.95rem; /* Slightly smaller font */
+    color: #333333; 
+    margin-bottom: 12px; /* Tighter spacing between paragraphs */
+    line-height: 1.5;
+}
+
+.mission-vision-block {
+    margin-top: 30px;
+}
+
+.mission-vision-block h3 {
+    font-size: 1.6rem;
+    margin-bottom: 8px; /* Pulls the paragraph right up to the header */
+    margin-top: 25px;
+}
+
+/* Two-tone header colors matching your brand */
+.text-blue {
+    color: var(--primary-color);
+}
+
+.text-gold {
+    color: var(--secondary-color);
+}
+
+.about-image-content {
+    flex: 0.9;
+}
+
+.property-showcase-img {
+    width: 100%;
+    height: 100%;
+    min-height: 400px; /* Keeps the image large but compact */
+    background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1974&auto=format&fit=crop') center/cover no-repeat;
+    /* Removed border-radius and box-shadow to match the sharp, flat look of the reference image */
+}
+
+/* Responsive adjustment for mobile screens */
+@media (max-width: 900px) {
+    .about-split-container {
+        flex-direction: column;
+    }
+    .about-text-content {
+        padding-right: 0;
+    }
+    .property-showcase-img {
+        height: 350px;
+        min-height: auto;
+    }
+}
+/* =========================================
+   12. APEX CRE Banner Section
+   ========================================= */
+.massive-banner {
+    background-color: var(--primary-color); /* APEX CRE Deep Navy */
+    padding: 60px 20px;
+    color: var(--text-light);
+}
+
+.massive-banner-container {
+    max-width: 900px; /* Keeps the text block from stretching too wide */
+    margin: 0 auto;   /* Centers the block on the page */
+    text-align: left; /* Aligns the text to the left inside the block */
+}
+
+.massive-banner-container h2 {
+    color: var(--secondary-color); /* APEX CRE Gold */
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.massive-banner-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.massive-banner-container p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   13. Philosophy / Disclaimer Banner
+   ========================================= */
+.philosophy-banner {
+    background-color: var(--primary-color); /* APEX CRE Deep Navy */
+    color: var(--text-light); /* White text */
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.philosophy-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.philosophy-banner h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* We reuse the gold class from earlier, but the word "Our" inherits the white text */
+.philosophy-banner p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e0e0e0; /* Slightly dimmed white to make it easy to read */
+    margin: 0 auto;
+    max-width: 850px;
+}
+
+/* =========================================
+   14. Multi-Column Footer & Gold Contact Bar
+   ========================================= */
+.site-footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    position: relative;
+    padding-top: 0;
+}
+
+/* Floating Gold Contact Bar */
+.footer-contact-bar {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    max-width: 1100px;
+    margin: 0 auto;
+    transform: translateY(-50%); /* Pulls the bar up so it floats on the edge */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 40px;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.contact-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-box .icon {
+    font-size: 1.5rem;
+}
+
+.contact-box strong {
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-box p {
+    font-size: 0.85rem;
+    color: #222;
+}
+
+.footer-invest-btn {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: background 0.3s ease;
+}
+
+.footer-invest-btn:hover {
+    background-color: #1b263b;
+}
+
+/* Main Footer Grid Content */
+.footer-content {
+    max-width: 1200px;
+    margin: -30px auto 40px; /* Adjusts spacing due to the pulled-up contact bar */
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+}
+
+.brand-col {
+    padding-right: 20px;
+}
+
+.footer-logo {
+    height: 100px;
+    width: auto;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.footer-disclaimer {
+    font-size: 0.8rem;
+    color: #b0b0b0;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    width: 32px;
+    height: 32px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover {
+    opacity: 0.8;
+}
+
+/* Footer Link Columns */
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links li a {
+    font-size: 0.9rem;
+    color: #d1d1d1;
+    position: relative;
+    padding-left: 12px;
+    transition: color 0.3s ease;
+}
+
+/* Adds the little gold dot bullet point before links */
+.footer-links li a::before {
+    content: "•";
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+}
+
+.footer-links li a:hover {
+    color: var(--secondary-color);
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .footer-contact-bar {
+        flex-direction: column;
+        gap: 20px;
+        transform: none; /* Removes floating overlap on small screens */
+        margin: 20px;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+        margin-top: 20px;
+    }
+}
+/* =========================================
+   15. Portfolio Page Specific Styles (Updated)
+   ========================================= */
+
+/* Top Metrics Bar */
+.portfolio-metrics-bar {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    margin-top: 100px; /* Accounts for fixed header */
+    border-bottom: 1px solid #eaeaea;
+}
+
+.pm-item {
+    text-align: center;
+    padding: 0 40px;
+}
+
+.pm-item h2 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.pm-item p {
+    font-size: 0.75rem;
+    color: #777;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.pm-divider {
+    width: 1px;
+    height: 40px;
+    background-color: #d1d1d1;
+}
+
+/* Portfolio Grid & Cards */
+.portfolio-section {
+    padding: 80px 50px;
+    background-color: #f8f9fa;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portfolio-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.property-img {
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+}
+
+.property-info {
+    padding: 30px;
+    text-align: center;
+}
+
+.property-info h3 {
+    color: var(--primary-color);
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+}
+
+.property-info .location {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+/* Learn More Gold Button */
+.learn-more-btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 14px 50px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
+}
+
+.learn-more-btn:hover {
+    background-color: #c9965d;
+}
+
+/* Bottom Data Grid inside Card */
+.card-data-grid {
+    border-top: 1px solid #eaeaea;
+    background-color: #ffffff;
+}
+
+.data-row {
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.data-row:last-child {
+    border-bottom: none;
+}
+
+.data-cell {
+    flex: 1;
+    text-align: center;
+    padding: 15px 10px;
+    border-right: 1px solid #eaeaea;
+}
+
+.data-cell:last-child {
+    border-right: none;
+}
+
+.data-cell strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    margin-bottom: 3px;
+}
+
+.data-cell span {
+    font-size: 0.75rem;
+    color: #777;
+    text-transform: uppercase;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    .portfolio-metrics-bar {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .pm-divider {
+        display: none;
+    }
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================================
+   16. Closed Deal Styles (Ribbon & Grayscale)
+   ========================================= */
+.property-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+}
+
+/* Turns the image black and white when closed */
+.closed-card .property-img {
+    filter: grayscale(100%);
+}
+
+/* Red diagonal corner banner ribbon */
+.closed-ribbon {
+    position: absolute;
+    top: 25px;
+    right: -35px;
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    padding: 6px 40px;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Grey out the button for closed deals */
+.closed-btn {
+    background-color: #b0b0b0 !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+}
+/* =========================================
+   17. Contact Page Specific Styles
+   ========================================= */
+.contact-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* Offset for fixed header */
+}
+
+.contact-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.contact-info-section {
+    padding: 60px 20px;
+    background-color: #ffffff;
+}
+
+.contact-info-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contact-intro {
+    margin-bottom: 30px;
+}
+
+.contact-intro h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.contact-intro p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.info-map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.info-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 35px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info-group strong {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.info-group p {
+    font-size: 1rem;
+    color: #444;
+}
+
+.map-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    min-height: 280px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    padding: 60px 20px 100px;
+    background-color: #f8f9fa;
+}
+
+.form-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.inquiry-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.inquiry-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.inquiry-form .form-group.full-width {
+    grid-column: span 2;
+    margin-bottom: 25px;
+}
+
+.inquiry-form label {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.inquiry-form input,
+.inquiry-form textarea {
+    padding: 14px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #fcfcfc;
+    color: var(--text-dark);
+}
+
+.inquiry-form input:focus,
+.inquiry-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.form-checkbox input {
+    margin-top: 4px;
+}
+
+.form-checkbox label {
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.form-checkbox a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.form-submit-btn {
+    display: block;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-submit-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .info-map-grid {
+        grid-template-columns: 1fr;
+    }
+    .inquiry-form .form-row {
+        grid-template-columns: 1fr;
+    }
+    .form-container {
+        padding: 25px;
+    }
+}
+/* =========================================
+   18. Terms and Conditions Page Styles
+   ========================================= */
+.terms-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.terms-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.terms-content-section {
+    padding: 80px 20px 120px;
+    background-color: #ffffff;
+}
+
+.terms-container {
+    max-width: 850px;
+    margin: 0 auto;
+    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.effective-date {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.intro-text {
+    margin-bottom: 40px;
+}
+
+.terms-block {
+    margin-bottom: 30px;
+}
+
+.terms-block h3 {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.sub-heading {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.terms-list {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.terms-list li {
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.contact-block-info p {
+    margin-bottom: 4px;
+}
+
+.contact-block-info a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+/* =========================================
+   19. Privacy Policy Page Styles
+   ========================================= */
+.privacy-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.privacy-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.privacy-content-section {
+    padding: 80px 20px 120px;
+    background-color: #ffffff;
+}
+
+.privacy-container {
+    max-width: 850px;
+    margin: 0 auto;
+    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.privacy-block {
+    margin-bottom: 30px;
+}
+
+.privacy-block h3 {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.privacy-list {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.privacy-list li {
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.mt-space {
+    margin-top: 10px;
+}
+
+/* =========================================
+   20. Investment Disclaimer Page Styles
+   ========================================= */
+.disclaimer-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.disclaimer-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.disclaimer-content-section {
+    padding: 80px 20px 120px;
+    background-color: #ffffff;
+}
+
+.disclaimer-container {
+    max-width: 850px;
+    margin: 0 auto;
+    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.disclaimer-block {
+    margin-bottom: 30px;
+}
+
+.disclaimer-block h3 {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+/* =========================================
+   21. Under Construction Page Styles
+   ========================================= */
+.construction-body {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.construction-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.construction-card {
+    background-color: var(--accent-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 50px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.construction-card h1 {
+    color: var(--secondary-color);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.construction-card p {
+    font-size: 1.05rem;
+    color: #d1d1d1;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.countdown-wrapper {
+    margin: 25px 0;
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.return-btn {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+
+/* =========================================
+   23. Hero Section Large Logo
+   ========================================= */
+.hero-main-logo {
+    width: 400px; /* Adjust this value to make it larger or smaller */
+    height: 400px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+/* =========================================
+   24. FAQ Accordion Page Styles
+   ========================================= */
+.faq-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.faq-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.faq-content-section {
+    padding: 80px 20px 120px;
+    background-color: #ffffff;
+}
+
+.faq-container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e0e0e0;
+}
+
+.faq-question {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 20px 25px;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+    background-color: #162a42;
+}
+
+/* Turns the active question gold like the reference image */
+.faq-question.active {
+    background-color: #d4af37 !important;
+    color: #0d1b2a !important;
+}
+
+.faq-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-question.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    background-color: #fcfcfc;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-top: 1px solid transparent;
+}
+
+/* Adds the border cleanly only when the dropdown is expanded */
+.faq-question.active + .faq-answer {
+    border-top: 1px solid #eeeeee;
+}
+
+.faq-answer p {
+    margin-bottom: 12px;
+}
+
+.faq-answer ul {
+    margin-left: 20px;
+    margin-bottom: 12px;
+}
+
+.faq-answer li {
+    margin-bottom: 6px;
+}
+
+.faq-answer a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+/* =========================================
+   25. Acquisitions Page Styles
+   ========================================= */
+.acq-hero-header {
+    height: 300px;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.acq-hero-header h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* Process Timeline Section */
+.process-timeline-section {
+    padding: 80px 20px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.timeline-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline-steps-bar {
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.step-badge {
+    width: 45px;
+    height: 45px;
+    background-color: #162a42;
+    border: 2px solid var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    z-index: 2;
+}
+
+.step-badge.active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.process-card {
+    text-align: center;
+    padding: 10px;
+}
+
+.step-subtitle {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.process-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: var(--text-light);
+}
+
+.process-card p {
+    font-size: 0.85rem;
+    color: #b0b0b0;
+    line-height: 1.5;
+}
+
+/* What We're Looking For Section */
+.criteria-section {
+    padding: 90px 20px;
+    background-color: #ffffff;
+}
+
+.criteria-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.criteria-section .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 50px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.criteria-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: transform 0.2s ease;
+}
+
+.criteria-card:hover {
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.criteria-num {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    background-color: #f0f4f8;
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border: 1px solid #dcdcdc;
+}
+
+.criteria-card p {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.4;
+}
+
+/* Sell Property Banner Section */
+.sell-property-section {
+    padding: 0 20px 100px;
+    background-color: #ffffff;
+}
+
+.sell-box {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    padding: 60px 40px;
+    text-align: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 30px rgba(13, 27, 42, 0.15);
+}
+
+.sell-box h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.sell-box p {
+    color: #b0b0b0;
+    max-width: 650px;
+    margin: 0 auto 15px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.contact-person {
+    color: var(--secondary-color) !important;
+    font-weight: 600;
+    margin-bottom: 30px !important;
+}
+
+.sell-action-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+}
+
+.sell-action-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.sell-action-link:hover {
+    color: var(--secondary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .process-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .timeline-steps-bar {
+        display: none;
+    }
+    .criteria-grid {
+        grid-template-columns: 1fr;
+    }
+    .sell-action-bar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+}

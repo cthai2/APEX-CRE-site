@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction | APEX CRE</title>
+    
+    <!-- Link to your existing CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Meta tag to automatically redirect back after 5 seconds -->
+    <meta http-equiv="refresh" content="5;url=javascript:history.back()">
+</head>
+<body class="construction-body">
+
+    <div class="construction-container">
+        <div class="construction-card">
+            <h1>Under Construction</h1>
+            <p>We are currently building out this feature for our investors. You will be redirected back shortly.</p>
+            
+            <div class="countdown-wrapper">
+                <p>Redirecting in <span id="countdown">5</span> seconds...</p>
+            </div>
+
+            <a href="javascript:history.back()" class="cta-btn return-btn">Go Back Now</a>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer animation
+        let seconds = 5;
+        const countdownEl = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            seconds--;
+            if(countdownEl) {
+                countdownEl.innerText = seconds;
+            }
+            if(seconds <= 0) {
+                clearInterval(timer);
+                window.history.back();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

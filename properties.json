@@ -1,0 +1,38 @@
+[
+    {
+        "name": "North Shore Landing",
+        "location": "Texas / Oklahoma Region",
+        "image": "https://images.unsplash.com/photo-1563396983906-b3795482a59a?q=80&w=2072&auto=format&fit=crop",
+        "units": 120,
+        "minInvestment": "$100,000",
+        "offeringSize": "$5,000,000",
+        "secType": "506(b)",
+        "dealType": "Direct Syndication",
+        "investmentType": "Equity",
+        "propertyType": "RV Park"
+    },
+    {
+        "name": "Nile Valley RV Park",
+        "location": "Texas / Oklahoma Region",
+        "image": "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
+        "units": 85,
+        "minInvestment": "$50,000",
+        "offeringSize": "$2,500,000",
+        "secType": "506(c)",
+        "dealType": "Direct Syndication",
+        "investmentType": "Equity",
+        "propertyType": "RV Park"
+    },
+    {
+        "name": "Wolf Creek RV Park",
+        "location": "Texas / Oklahoma Region",
+        "image": "https://images.unsplash.com/photo-1536643444455-b0d306b99615?q=80&w=2069&auto=format&fit=crop",
+        "units": 95,
+        "minInvestment": "$75,000",
+        "offeringSize": "$3,800,000",
+        "secType": "506(c)",
+        "dealType": "Direct Syndication",
+        "investmentType": "Equity",
+        "propertyType": "RV Park"
+    }
+]
