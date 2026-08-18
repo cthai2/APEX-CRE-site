@@ -17,7 +17,6 @@ The primary purpose of the **APEX CRE** web platform is to serve as a digital de
 
 ## Author & Developer Credit
 * **Developed By:** Chris Thai
-* **Role:** General Partner & Lead Underwriter / Developer
 * **Year:** 2026
 
 ---
