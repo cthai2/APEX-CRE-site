@@ -1708,3 +1708,21 @@ footer p {
     border-radius: 4px;
     box-shadow: 0 3px 14px rgba(0,0,0,0.2);
 }
+
+/* =========================================
+   Fix for Single Cards Stretching
+   ========================================= */
+.portfolio-grid {
+    display: grid !important;
+    /* Using auto-fill instead of auto-fit prevents single items from stretching */
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
+    gap: 30px;
+    justify-content: start;
+}
+
+.portfolio-card {
+    /* Sets a hard cap on the size so it matches a standard 3-column layout */
+    max-width: 380px; 
+    width: 100%;
+    margin: 0; /* Aligns it neatly to the left */
+}
