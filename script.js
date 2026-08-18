@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Embedded property database with pitch highlights array
     const properties = [
         {
             name: "Trinity Bay RV Park & Lodging",
             location: "1512 South Main, Anahuac, TX 77514",
             image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg",
-            link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614", // Link to Portal
+            link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614",
             status: "active",
             units: 120,
             minInvestment: "$50,000",
@@ -27,17 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "https://your-cashflow-portal.com/north-shore",
             status: "closed",
             units: 85,
-            minInvestment: "$50,000",
-            offeringSize: "$2,500,000",
-            secType: "506(c)",
-            dealType: "Direct Syndication",
-            investmentType: "Equity",
-            propertyType: "RV Park",
-            highlights: [
-                "Below-market daily/monthly rates with immediate upside through professional management",
-                "Expansion acreage ready for pad site development",
-                "Strong historical cash flow with high demand corridor positioning"
-            ]
+            irr: "19-21%",
+            annualizedReturn: "22%",
+            preferredReturn: "7%"
         },
         {
             name: "Dell Creek RV Park",
@@ -46,25 +37,20 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "https://your-cashflow-portal.com/north-shore",
             status: "closed",
             units: 95,
-            minInvestment: "$75,000",
-            offeringSize: "$1,400,000",
-            secType: "506(c)",
-            dealType: "Direct Syndication",
-            investmentType: "Equity",
-            propertyType: "RV Park",
-            highlights: [
-                "Below-market daily/monthly rates with immediate upside through professional management",
-                "Expansion acreage ready for pad site development",
-                "Strong historical cash flow with high demand corridor positioning"
-            ]
+            irr: "18-20%",
+            annualizedReturn: "20.5%",
+            preferredReturn: "7%"
         }
     ];
 
-    const gridContainer = document.getElementById('portfolio-container');
-    if (!gridContainer) return;
+    const activeContainer = document.getElementById('active-container');
+    const closedContainer = document.getElementById('closed-container');
+    
+    if (!activeContainer || !closedContainer) return;
 
     let totalUnits = 0;
-    gridContainer.innerHTML = '';
+    activeContainer.innerHTML = '';
+    closedContainer.innerHTML = '';
 
     properties.forEach(prop => {
         totalUnits += prop.units || 0;
@@ -75,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnClass = isClosed ? 'learn-more-btn closed-btn' : 'learn-more-btn';
         const buttonLink = isClosed ? '#' : prop.link;
 
-        // Build highlights box HTML if highlights exist for the property
         let highlightsHTML = '';
         if (prop.highlights && prop.highlights.length > 0) {
             highlightsHTML = `
@@ -88,19 +73,29 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        const cardHTML = `
-            <div class="${cardClass}">
-                <div class="property-img-wrapper">
-                    <div class="property-img" style="background-image: url('${prop.image}');"></div>
-                    ${ribbonHTML}
+        // Conditionally build data grid based on whether the deal is closed or active
+        let dataGridHTML = '';
+        if (isClosed) {
+            dataGridHTML = `
+                <div class="card-data-grid">
+                    <div class="data-row">
+                        <div class="data-cell">
+                            <strong>${prop.irr}</strong>
+                            <span>Internal Rate of Return</span>
+                        </div>
+                        <div class="data-cell">
+                            <strong>${prop.annualizedReturn}</strong>
+                            <span>Annualized Return</span>
+                        </div>
+                        <div class="data-cell">
+                            <strong>${prop.preferredReturn}</strong>
+                            <span>Preferred Return</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="property-info">
-                    <h3>${prop.name}</h3>
-                    <p class="location">${prop.location}</p>
-                    ${highlightsHTML}
-                    <a href="${buttonLink}" ${isClosed ? '' : 'target="_blank"'} class="${btnClass}">LEARN MORE</a>
-                </div>
-                
+            `;
+        } else {
+            dataGridHTML = `
                 <div class="card-data-grid">
                     <div class="data-row">
                         <div class="data-cell">
@@ -131,27 +126,57 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 </div>
+            `;
+        }
+
+        const cardHTML = `
+            <div class="${cardClass}">
+                <div class="property-img-wrapper">
+                    <div class="property-img" style="background-image: url('${prop.image}');"></div>
+                    ${ribbonHTML}
+                </div>
+                <div class="property-info">
+                    <h3>${prop.name}</h3>
+                    <p class="location">${prop.location}</p>
+                    ${highlightsHTML}
+                    <a href="${buttonLink}" ${isClosed ? '' : 'target="_blank"'} class="${btnClass}">LEARN MORE</a>
+                </div>
+                
+                ${dataGridHTML}
             </div>
         `;
-        gridContainer.innerHTML += cardHTML;
+
+        // Route card to correct container based on status
+        if (isClosed) {
+            closedContainer.innerHTML += cardHTML;
+        } else {
+            activeContainer.innerHTML += cardHTML;
+        }
     });
 
     const totalProjects = properties.length;
     const projectCountElement = document.getElementById('project-count');
-    if (projectCountElement) projectCountElement.setAttribute('data-target', totalProjects);
+    if (projectCountElement) {
+        projectCountElement.setAttribute('data-target', totalProjects);
+        projectCountElement.innerText = totalProjects;
+    }
 
     const unitCountElement = document.getElementById('unit-count');
-    if (unitCountElement) unitCountElement.setAttribute('data-target', totalUnits);
+    if (unitCountElement) {
+        unitCountElement.setAttribute('data-target', totalUnits);
+    }
 
     runCounters();
 });
 
 function runCounters() {
-    const counters = document.querySelectorAll('.counter, #project-count, #unit-count');
+    const counters = document.querySelectorAll('.counter, #unit-count');
     const speed = 200;
 
     counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
+        const targetAttr = counter.getAttribute('data-target');
+        if (!targetAttr) return;
+        const target = +targetAttr;
         let count = 0;
         
         const updateCount = () => {
