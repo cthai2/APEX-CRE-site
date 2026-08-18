@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             name: "Trinity Bay RV Park & Lodging",
             location: "1512 South Main, Anahuac, TX 77514",
+            lat: 29.7730,
+            lng: -94.6820,
             image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg",
             link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614",
             status: "active",
@@ -21,7 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Nile Valley RV Park",
-            location: "Texas / Oklahoma Region",
+            location: "3517 FM 2668, Bay City, TX 77414",
+            lat: 28.969073,
+            lng: -95.951974,
             image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
             link: "https://your-cashflow-portal.com/north-shore",
             status: "closed",
@@ -33,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             name: "Dell Creek RV Park",
             location: "515 Ulrich Ln, Crosby, TX 77532",
+            lat: 29.8970,
+            lng: -95.0450,
             image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
             link: "https://your-cashflow-portal.com/north-shore",
             status: "closed",
@@ -42,6 +48,19 @@ document.addEventListener("DOMContentLoaded", () => {
             preferredReturn: "7%"
         }
     ];
+
+    // Initialize the Leaflet Map
+    const mapElement = document.getElementById('portfolio-map');
+    let map;
+    
+    if (mapElement) {
+        map = L.map('portfolio-map').setView([31.9686, -96.9018], 6);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            maxZoom: 19
+        }).addTo(map);
+    }
 
     const activeContainer = document.getElementById('active-container');
     const closedContainer = document.getElementById('closed-container');
@@ -61,6 +80,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnClass = isClosed ? 'learn-more-btn closed-btn' : 'learn-more-btn';
         const buttonLink = isClosed ? '#' : prop.link;
 
+        // Map Pin Logic
+        if (map && prop.lat && prop.lng) {
+            const strokeColor = isClosed ? '#b52a36' : '#1e7b34';
+            const fillColor = isClosed ? '#e63946' : '#28a745';
+
+            const marker = L.circleMarker([prop.lat, prop.lng], {
+                radius: 8,
+                color: strokeColor,
+                weight: 3,
+                fillColor: fillColor,
+                fillOpacity: 1
+            }).addTo(map);
+
+            marker.bindPopup(`
+                <div style="text-align: center; padding: 5px;">
+                    <h4 style="margin: 0 0 5px; color: #0d1b2a; font-family: sans-serif;">${prop.name}</h4>
+                    <p style="margin: 0 0 10px; font-size: 12px; color: #666;">${prop.location}</p>
+                </div>
+            `);
+        }
+
         let highlightsHTML = '';
         if (prop.highlights && prop.highlights.length > 0) {
             highlightsHTML = `
@@ -73,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // Conditionally build data grid based on whether the deal is closed or active
         let dataGridHTML = '';
         if (isClosed) {
             dataGridHTML = `
@@ -146,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
 
-        // Route card to correct container based on status
         if (isClosed) {
             closedContainer.innerHTML += cardHTML;
         } else {
