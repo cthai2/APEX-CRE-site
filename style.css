@@ -1585,3 +1585,34 @@ footer p {
         align-items: center;
     }
 }
+/* =========================================
+   26. Highlights Bullet Points Styles
+   ========================================= */
+.highlights-box {
+    margin: 15px 0;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border-left: 3px solid var(--secondary-color);
+    border-radius: 4px;
+    text-align: left;
+}
+
+.highlights-box h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.highlights-box ul {
+    margin-left: 16px;
+    list-style-type: disc;
+}
+
+.highlights-box li {
+    font-size: 0.82rem;
+    color: #444444;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
