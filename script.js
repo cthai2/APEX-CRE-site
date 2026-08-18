@@ -1,47 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Embedded property database (no local fetch required)
+    // 1. Embedded property database with pitch highlights array
     const properties = [
         {
             name: "Trinity Bay RV Park & Lodging",
             location: "1512 South Main, Anahuac, TX 77514",
-            image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg", // Local folder path,
-            link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614", // Link to portal
-			status: "active", // Active deal
-			units: 120,
+            image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg",
+            link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614", // Link to Portal
+            status: "active",
+            units: 120,
             minInvestment: "$50,000",
             offeringSize: "$2,800,000",
             secType: "506(b)",
             dealType: "Direct Syndication",
             investmentType: "Equity",
-            propertyType: "RV Park"
+            propertyType: "RV Park",
+            highlights: [
+                "Below-market daily/monthly rates with immediate upside through professional management",
+                "Expansion acreage ready for pad site development",
+                "Strong historical cash flow with high demand corridor positioning"
+            ]
         },
         {
             name: "Nile Valley RV Park",
             location: "Texas / Oklahoma Region",
             image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
-            link: "https://your-cashflow-portal.com/north-shore", // Link to portal
-			status: "closed", // Closed deal
-			units: 85,
+            link: "https://your-cashflow-portal.com/north-shore",
+            status: "closed",
+            units: 85,
             minInvestment: "$50,000",
             offeringSize: "$2,500,000",
             secType: "506(c)",
             dealType: "Direct Syndication",
             investmentType: "Equity",
-            propertyType: "RV Park"
+            propertyType: "RV Park",
+            highlights: [
+                "Below-market daily/monthly rates with immediate upside through professional management",
+                "Expansion acreage ready for pad site development",
+                "Strong historical cash flow with high demand corridor positioning"
+            ]
         },
         {
             name: "Dell Creek RV Park",
             location: "515 Ulrich Ln, Crosby, TX 77532",
             image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
-            link: "https://your-cashflow-portal.com/north-shore", // Link to portal
-			status: "closed", // Closed deal
-			units: 95,
+            link: "https://your-cashflow-portal.com/north-shore",
+            status: "closed",
+            units: 95,
             minInvestment: "$75,000",
             offeringSize: "$1,400,000",
             secType: "506(c)",
             dealType: "Direct Syndication",
             investmentType: "Equity",
-            propertyType: "RV Park"
+            propertyType: "RV Park",
+            highlights: [
+                "Below-market daily/monthly rates with immediate upside through professional management",
+                "Expansion acreage ready for pad site development",
+                "Strong historical cash flow with high demand corridor positioning"
+            ]
         }
     ];
 
@@ -54,12 +69,24 @@ document.addEventListener("DOMContentLoaded", () => {
     properties.forEach(prop => {
         totalUnits += prop.units || 0;
 
-        // Check if the deal is closed to apply classes
         const isClosed = prop.status === 'closed';
         const ribbonHTML = isClosed ? '<div class="closed-ribbon">CLOSED</div>' : '';
         const cardClass = isClosed ? 'portfolio-card closed-card' : 'portfolio-card';
         const btnClass = isClosed ? 'learn-more-btn closed-btn' : 'learn-more-btn';
         const buttonLink = isClosed ? '#' : prop.link;
+
+        // Build highlights box HTML if highlights exist for the property
+        let highlightsHTML = '';
+        if (prop.highlights && prop.highlights.length > 0) {
+            highlightsHTML = `
+                <div class="highlights-box">
+                    <h4>Highlights</h4>
+                    <ul>
+                        ${prop.highlights.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
 
         const cardHTML = `
             <div class="${cardClass}">
@@ -70,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="property-info">
                     <h3>${prop.name}</h3>
                     <p class="location">${prop.location}</p>
+                    ${highlightsHTML}
                     <a href="${buttonLink}" ${isClosed ? '' : 'target="_blank"'} class="${btnClass}">LEARN MORE</a>
                 </div>
                 
