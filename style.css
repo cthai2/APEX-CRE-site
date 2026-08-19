@@ -1726,3 +1726,62 @@ footer p {
     width: 100%;
     margin: 0; /* Aligns it neatly to the left */
 }
+
+/* =========================================
+   30. Filter Panel Styles
+   ========================================= */
+.filter-panel {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    background-color: #fcfcfc;
+    border: 1px solid #eaeaea;
+    padding: 20px 30px;
+    border-radius: 8px;
+    font-family: sans-serif;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.filter-row:last-child {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 1px;
+    width: 80px;
+}
+
+.filter-btn {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: #0d1b2a;
+}
+
+.filter-btn.active {
+    background-color: #0d1b2a;
+    color: #ffffff;
+    border-color: #0d1b2a;
+}
+
+/* Helper to hide empty section headers when filtered */
+.hidden-section {
+    display: none !important;
+}
