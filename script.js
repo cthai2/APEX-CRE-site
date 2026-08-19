@@ -5,8 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
             location: "1512 South Main, Anahuac, TX 77514",
             lat: 29.7730,
             lng: -94.6820,
+            boundary: [
+                [29.7735, -94.6825],
+                [29.7735, -94.6815],
+                [29.7725, -94.6815],
+                [29.7725, -94.6825]
+            ],
             image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg",
             link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614",
+            sitePlan: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2000&auto=format&fit=crop", 
             status: "active",
             units: 120,
             minInvestment: "$50,000",
@@ -152,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // Priority Sort: Dynamically order properties by financial metrics & profit potential
+    // Priority Sort
     properties.sort((a, b) => {
         const getFinancialWeight = (prop) => {
             const valStr = prop.annualizedReturn || prop.irr || prop.offeringSize || "0";
@@ -162,16 +169,34 @@ document.addEventListener("DOMContentLoaded", () => {
         return getFinancialWeight(b) - getFinancialWeight(a);
     });
 
-    // Initialize Leaflet Map
     const mapElement = document.getElementById('portfolio-map');
     let map, markersLayer;
     
     if (mapElement) {
-        map = L.map('portfolio-map').setView([31.9686, -96.9018], 6);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        // Define base map layers
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri'
+        });
+
+        const streetLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
             maxZoom: 19
-        }).addTo(map);
+        });
+
+        // Initialize map with Satellite as default
+        map = L.map('portfolio-map', {
+            center: [31.9686, -96.9018],
+            zoom: 6,
+            layers: [satelliteLayer]
+        });
+
+        // Add Layer Control Switch
+        const baseMaps = {
+            "Satellite": satelliteLayer,
+            "Street Map": streetLayer
+        };
+        L.control.layers(baseMaps).addTo(map);
+
         markersLayer = L.layerGroup().addTo(map);
     }
 
@@ -191,18 +216,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let visibleActiveCount = 0;
         let visibleClosedCount = 0;
         let visibleSoonCount = 0;
-        let totalUnits = 0;
-        let totalProjects = 0;
 
         properties.forEach(prop => {
-            // Apply Filters
             const matchesStatus = currentStatusFilter === 'all' || prop.status === currentStatusFilter;
             const matchesType = currentTypeFilter === 'all' || prop.propertyType === currentTypeFilter;
 
             if (!matchesStatus || !matchesType) return;
-
-            totalProjects++;
-            totalUnits += prop.units || 0;
 
             const isClosed = prop.status === 'closed';
             const isComingSoon = prop.status === 'coming-soon';
@@ -220,11 +239,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const cardClass = isClosed ? 'portfolio-card closed-card' : 'portfolio-card';
-            const btnClass = (isClosed || isComingSoon) ? 'learn-more-btn closed-btn' : 'learn-more-btn';
-            const buttonLink = (isClosed || isComingSoon) ? '#' : prop.link;
-            const buttonText = isComingSoon ? 'COMING SOON' : 'LEARN MORE';
+            const btnClass = isClosed ? 'learn-more-btn closed-btn' : 'learn-more-btn';
+            let buttonLink = prop.link;
+            let buttonText = 'LEARN MORE';
 
-            // Map Pin Logic
+            if (isClosed) {
+                buttonLink = '#';
+            } else if (isComingSoon) {
+                buttonLink = `mailto:investments@apexcre.com?subject=Waitlist Request: ${prop.name}&body=Please add me to the early access waitlist for ${prop.name}.`;
+                buttonText = 'JOIN WAITLIST';
+            }
+
             if (map && prop.lat && prop.lng) {
                 let strokeColor = '#1e7b34'; 
                 let fillColor = '#28a745'; 
@@ -237,21 +262,31 @@ document.addEventListener("DOMContentLoaded", () => {
                     fillColor = '#ffc107'; 
                 }
 
-                const marker = L.circleMarker([prop.lat, prop.lng], {
-                    radius: 8,
-                    color: strokeColor,
-                    weight: 3,
-                    fillColor: fillColor,
-                    fillOpacity: 1
-                });
+                let mapFeature;
+                if (prop.boundary) {
+                    mapFeature = L.polygon(prop.boundary, {
+                        color: strokeColor,
+                        fillColor: fillColor,
+                        fillOpacity: 0.5,
+                        weight: 3
+                    });
+                } else {
+                    mapFeature = L.circleMarker([prop.lat, prop.lng], {
+                        radius: 8,
+                        color: strokeColor,
+                        weight: 3,
+                        fillColor: fillColor,
+                        fillOpacity: 1
+                    });
+                }
                 
-                marker.bindPopup(`
+                mapFeature.bindPopup(`
                     <div style="text-align: center; padding: 5px;">
                         <h4 style="margin: 0 0 5px; color: #0d1b2a; font-family: sans-serif;">${prop.name}</h4>
                         <p style="margin: 0 0 10px; font-size: 12px; color: #666;">${prop.location}</p>
                     </div>
                 `);
-                markersLayer.addLayer(marker);
+                markersLayer.addLayer(mapFeature);
             }
 
             let highlightsHTML = '';
@@ -266,23 +301,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
             }
 
+            let sitePlanHTML = '';
+            if (prop.sitePlan) {
+                sitePlanHTML = `<button class="secondary-btn" onclick="openModal('${prop.sitePlan}', '${prop.name}')">VIEW SITE PLAN</button>`;
+            }
+
             let dataGridHTML = '';
             if (isClosed) {
                 dataGridHTML = `
                     <div class="card-data-grid">
                         <div class="data-row">
-                            <div class="data-cell">
-                                <strong>${prop.irr || 'TBD'}</strong>
-                                <span>Internal Rate of Return</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.annualizedReturn || 'TBD'}</strong>
-                                <span>Annualized Return</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.preferredReturn || 'TBD'}</strong>
-                                <span>Preferred Return</span>
-                            </div>
+                            <div class="data-cell"><strong>${prop.irr || 'TBD'}</strong><span>Internal Rate of Return</span></div>
+                            <div class="data-cell"><strong>${prop.annualizedReturn || 'TBD'}</strong><span>Annualized Return</span></div>
+                            <div class="data-cell"><strong>${prop.preferredReturn || 'TBD'}</strong><span>Preferred Return</span></div>
                         </div>
                     </div>
                 `;
@@ -290,32 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 dataGridHTML = `
                     <div class="card-data-grid">
                         <div class="data-row">
-                            <div class="data-cell">
-                                <strong>${prop.minInvestment || 'TBD'}</strong>
-                                <span>Minimum Investment</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.offeringSize || 'TBD'}</strong>
-                                <span>Offering size</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.secType || 'TBD'}</strong>
-                                <span>SEC Type</span>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-cell">
-                                <strong>${prop.dealType || 'TBD'}</strong>
-                                <span>Deal Type</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.investmentType || 'TBD'}</strong>
-                                <span>Investment Type</span>
-                            </div>
-                            <div class="data-cell">
-                                <strong>${prop.propertyType || 'TBD'}</strong>
-                                <span>Property Type</span>
-                            </div>
+                            <div class="data-cell"><strong>${prop.minInvestment || 'TBD'}</strong><span>Minimum Investment</span></div>
+                            <div class="data-cell"><strong>${prop.offeringSize || 'TBD'}</strong><span>Offering size</span></div>
+                            <div class="data-cell"><strong>${prop.secType || 'TBD'}</strong><span>SEC Type</span></div>
                         </div>
                     </div>
                 `;
@@ -332,6 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="location">${prop.location}</p>
                         ${highlightsHTML}
                         <a href="${buttonLink}" ${isClosed || isComingSoon ? '' : 'target="_blank"'} class="${btnClass}">${buttonText}</a>
+                        ${sitePlanHTML}
                     </div>
                     ${dataGridHTML}
                 </div>
@@ -342,25 +351,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isActive && activeContainer) activeContainer.innerHTML += cardHTML;
         });
 
-        // Hide section headers if they are empty
         toggleSectionVisibility(activeContainer, visibleActiveCount);
         toggleSectionVisibility(comingSoonContainer, visibleSoonCount);
         toggleSectionVisibility(closedContainer, visibleClosedCount);
-
-        // Update statistics counters based on currently visible properties
-        const projectCountElement = document.getElementById('project-count');
-        if (projectCountElement) {
-            projectCountElement.setAttribute('data-target', totalProjects);
-            projectCountElement.innerText = '0';
-        }
-
-        const unitCountElement = document.getElementById('unit-count');
-        if (unitCountElement) {
-            unitCountElement.setAttribute('data-target', totalUnits);
-            unitCountElement.innerText = '0';
-        }
-
-        runCounters();
     };
 
     const toggleSectionVisibility = (container, count) => {
@@ -379,52 +372,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Filter Button Listeners
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const group = e.target.getAttribute('data-filter-group');
             const filterVal = e.target.getAttribute('data-filter');
 
-            // Update UI active states
             document.querySelectorAll(`.filter-btn[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
 
-            // Update state
             if (group === 'status') {
                 currentStatusFilter = filterVal;
             } else if (group === 'type') {
                 currentTypeFilter = filterVal;
             }
-
             renderPortfolio();
         });
     });
 
-    // Initial render
     renderPortfolio();
 });
 
-function runCounters() {
-    const counters = document.querySelectorAll('.counter, #unit-count');
-    const speed = 200;
+function openModal(imageSrc, propertyName) {
+    document.getElementById('modal-title').innerText = propertyName + " - Site Plan";
+    document.getElementById('modal-image').src = imageSrc;
+    document.getElementById('site-plan-modal').style.display = 'flex';
+}
 
-    counters.forEach(counter => {
-        const targetAttr = counter.getAttribute('data-target');
-        if (!targetAttr) return;
-        const target = +targetAttr;
-        let count = 0;
-        
-        const updateCount = () => {
-            const increment = target / speed;
-            if (count < target) {
-                count += increment;
-                counter.innerText = Math.ceil(count).toLocaleString();
-                setTimeout(updateCount, 15);
-            } else {
-                counter.innerText = target.toLocaleString();
-            }
-        };
-        
-        updateCount();
-    });
+function closeModal() {
+    document.getElementById('site-plan-modal').style.display = 'none';
+    document.getElementById('modal-image').src = '';
 }
