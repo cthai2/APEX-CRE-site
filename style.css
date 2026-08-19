@@ -1840,3 +1840,226 @@ footer p {
     background-color: #0d1b2a;
     color: #fff;
 }
+
+/* =========================================
+   32. Dark Mode Styles
+   ========================================= */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Headings */
+body.dark-mode .portfolio-category-header h2,
+body.dark-mode .portfolio-card h3,
+body.dark-mode h4 {
+    color: #ffffff !important;
+}
+
+/* Filter Panel */
+body.dark-mode .filter-panel {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+body.dark-mode .filter-btn {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body.dark-mode .filter-btn:hover {
+    border-color: #ffc107;
+}
+
+body.dark-mode .filter-btn.active {
+    background-color: #ffc107;
+    color: #121212;
+    border-color: #ffc107;
+}
+
+/* Cards */
+body.dark-mode .portfolio-card {
+    background-color: #1e1e1e;
+    border-color: #333;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .card-data-grid {
+    background-color: #252525;
+    border-top: 1px solid #333;
+}
+
+body.dark-mode .data-cell {
+    border-right: 1px solid #333;
+}
+
+body.dark-mode .data-cell strong {
+    color: #ffc107; /* Gold metrics pop nicely on dark mode */
+}
+
+body.dark-mode .data-cell span {
+    color: #aaa;
+}
+
+/* Modal */
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .close-modal {
+    color: #e0e0e0;
+}
+
+/* Buttons */
+body.dark-mode .secondary-btn {
+    border-color: #e0e0e0;
+    color: #e0e0e0;
+}
+
+body.dark-mode .secondary-btn:hover {
+    background-color: #e0e0e0;
+    color: #121212;
+}
+
+/* =========================================
+   33. Map Size & Layout Adjustments
+   ========================================= */
+#portfolio-map {
+    height: 700px !important; /* Increased from 600px to give it a much larger footprint */
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.leaflet-control-custom a:hover {
+    background-color: #f4f4f4 !important;
+}
+
+body.dark-mode .leaflet-control-custom a {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+/* =========================================
+   34. Demographics Bottom Bar (2x2 Grid)
+   ========================================= */
+.demo-popup-side {
+    display: none; 
+    background: #ffffff; 
+    padding: 15px 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    border: 1px solid #e0e0e0;
+    border-top: 4px solid var(--primary-color, #0d1b2a);
+    width: 100%; 
+    margin-top: 15px;
+    font-family: sans-serif;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 equal columns */
+    gap: 10px 0;
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.demo-cell {
+    text-align: center;
+    padding: 10px 15px;
+    background-color: #fcfcfc;
+    /* Creates the grid lines between the 4 cells */
+    border-right: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+}
+
+/* Remove right border for the right column */
+.demo-cell:nth-child(even) {
+    border-right: none;
+}
+
+/* Remove bottom border for the bottom row */
+.demo-cell:nth-child(3),
+.demo-cell:nth-child(4) {
+    border-bottom: none;
+}
+
+.demo-cell strong {
+    color: #888;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.demo-cell span {
+    display: block;
+    color: #333;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode .demo-popup-side {
+    background: #1e1e1e;
+    border-color: #333;
+    border-top-color: #ffc107;
+}
+
+body.dark-mode .demo-grid {
+    border-color: #333;
+}
+
+body.dark-mode .demo-cell {
+    background-color: #252525;
+    border-color: #333;
+}
+
+body.dark-mode .demo-popup-side h4,
+body.dark-mode .demo-cell span { color: #e0e0e0 !important; }
+body.dark-mode .demo-cell strong { color: #aaa; }
+
+/* =========================================
+   35. Filter Panel Instructions
+   ========================================= */
+.filter-instructions {
+    font-size: 0.85rem;
+    color: #555;
+    background-color: #f0f4f8;
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 3px solid var(--secondary-color, #e0a96d);
+}
+
+.filter-instructions strong {
+    color: var(--primary-color, #0d1b2a);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+}
+
+/* Dark Mode Support for Instructions */
+body.dark-mode .filter-instructions {
+    background-color: #252525;
+    color: #bbb;
+    border-left-color: #ffc107;
+}
+
+body.dark-mode .filter-instructions strong {
+    color: #e0e0e0;
+}

@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "2,284",
+            popGrowth: "+3.2%",
+            medianIncome: "$68,500",
+            crimeRating: "A-",
             highlights: [
                 "Below-market daily/monthly rates with immediate upside through professional management",
                 "Expansion acreage ready for pad site development",
@@ -43,6 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "3,100",
+            popGrowth: "+5.1%",
+            medianIncome: "$72,400",
+            crimeRating: "B+",
             highlights: [
                 "Below-market daily/monthly rates with immediate upside through professional management",
                 "Expansion acreage ready for pad site development",
@@ -61,7 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
             irr: "22-24%",
             annualizedReturn: "24%",
             preferredReturn: "7%",
-            propertyType: "RV Park"
+            propertyType: "RV Park",
+            population: "15,800",
+            popGrowth: "+8.4%",
+            medianIncome: "$84,000",
+            crimeRating: "A"
         },
         {
             name: "Kenedy Village RV Park",
@@ -78,6 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "3,250",
+            popGrowth: "+2.1%",
+            medianIncome: "$55,000",
+            crimeRating: "B",
             highlights: [
                 "Positioned for workforce and transient housing demand in the Kenedy region",
                 "Significant value-add potential through site and operational enhancements"
@@ -98,6 +114,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "25,100",
+            popGrowth: "+1.8%",
+            medianIncome: "$48,900",
+            crimeRating: "B-",
             highlights: [
                 "Strategically located near Lake Murray recreation and attractions",
                 "Value-add opportunity through expansion and operational improvements"
@@ -118,6 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "98,000",
+            popGrowth: "+6.5%",
+            medianIncome: "$76,200",
+            crimeRating: "A-",
             highlights: [
                 "Located in the rapidly growing Conroe market near major thoroughfares",
                 "Strong value-add opportunity through operational and site improvements"
@@ -138,6 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
             dealType: "Direct Syndication",
             investmentType: "Equity",
             propertyType: "RV Park",
+            population: "1,300",
+            popGrowth: "+4.1%",
+            medianIncome: "$59,000",
+            crimeRating: "A",
             highlights: [
                 "Currently in the underwriting phase",
                 "Join our investor list for early access and deal alerts"
@@ -155,7 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
             irr: "19-21%",
             annualizedReturn: "22%",
             preferredReturn: "7%",
-            propertyType: "RV Park"
+            propertyType: "RV Park",
+            population: "17,500",
+            popGrowth: "+1.2%",
+            medianIncome: "$52,000",
+            crimeRating: "B+"
         }
     ];
 
@@ -169,13 +201,38 @@ document.addEventListener("DOMContentLoaded", () => {
         return getFinancialWeight(b) - getFinancialWeight(a);
     });
 
+    window.portfolioProperties = properties;
+
     const mapElement = document.getElementById('portfolio-map');
     let map, markersLayer;
     
+    // Configure Map Container Layout (Stacked vertically)
+    if (mapElement && !document.getElementById('demo-popup')) {
+        const mapContainer = mapElement.parentElement;
+        
+        mapContainer.style.display = 'block'; // Stacks map and demographics vertically
+
+        const popupHTML = `
+            <div id="demo-popup" class="demo-popup-side">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eaeaea; padding-bottom: 8px;">
+                    <h4 id="demo-title" style="margin: 0; color: #0d1b2a; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Market Demographics</h4>
+                    <span class="close-demo" onclick="document.getElementById('demo-popup').style.display='none'; window.dispatchEvent(new Event('resize'));" style="cursor: pointer; font-size: 1.2rem; color: #888; line-height: 1;">&times;</span>
+                </div>
+                <div class="demo-grid">
+                    <div class="demo-cell"><strong>Population</strong><span id="demo-pop"></span></div>
+                    <div class="demo-cell"><strong>Pop Growth</strong><span id="demo-growth"></span></div>
+                    <div class="demo-cell"><strong>Median Income</strong><span id="demo-income"></span></div>
+                    <div class="demo-cell"><strong>Crime Rating</strong><span id="demo-crime"></span></div>
+                </div>
+            </div>
+        `;
+        mapContainer.insertAdjacentHTML('beforeend', popupHTML);
+    }
+    
     if (mapElement) {
-        // Define base map layers
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri'
+            attribution: 'Tiles &copy; Esri',
+            maxZoom: 19
         });
 
         const streetLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -183,22 +240,70 @@ document.addEventListener("DOMContentLoaded", () => {
             maxZoom: 19
         });
 
-        // Initialize map with Street Map as default
         map = L.map('portfolio-map', {
             center: [31.9686, -96.9018],
             zoom: 6,
+            maxZoom: 19,
             layers: [streetLayer]
         });
 
-        // Add Layer Control Switch
         const baseMaps = {
             "Street Map": streetLayer,
             "Satellite": satelliteLayer
         };
         L.control.layers(baseMaps).addTo(map);
 
+        L.Control.ResetView = L.Control.extend({
+            options: { position: 'topleft' },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+                container.innerHTML = '<a href="#" title="Zoom Out to Full Extent" style="font-size: 18px; text-decoration: none; color: #333; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; background-color: #fff;">🌍</a>';
+                
+                L.DomEvent.disableClickPropagation(container);
+                
+                container.onclick = function(e){
+                    e.preventDefault();
+                    map.flyTo([31.9686, -96.9018], 6, {
+                        animate: true,
+                        duration: 1.5
+                    });
+                }
+                return container;
+            }
+        });
+        map.addControl(new L.Control.ResetView());
+
         markersLayer = L.layerGroup().addTo(map);
     }
+
+    // Global function to handle zoom and side-panel toggle
+    window.flyToProperty = function(index) {
+        const prop = window.portfolioProperties[index];
+        if (!prop) return;
+
+        const popup = document.getElementById('demo-popup');
+        if (popup) {
+            document.getElementById('demo-title').innerText = prop.name;
+            document.getElementById('demo-pop').innerText = prop.population || 'TBD';
+            document.getElementById('demo-growth').innerText = prop.popGrowth || 'TBD';
+            document.getElementById('demo-income').innerText = prop.medianIncome || 'TBD';
+            document.getElementById('demo-crime').innerText = prop.crimeRating || 'TBD';
+            
+            popup.style.display = 'none';
+            setTimeout(() => { 
+                popup.style.display = 'block'; 
+                if (map) {
+                    map.invalidateSize(); // Forces map to adapt to new width
+                    map.flyTo([prop.lat, prop.lng], 19, {
+                        animate: true,
+                        duration: 1.5
+                    });
+                }
+            }, 10);
+            
+            document.getElementById('portfolio-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
 
     const activeContainer = document.getElementById('active-container');
     const closedContainer = document.getElementById('closed-container');
@@ -217,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let visibleClosedCount = 0;
         let visibleSoonCount = 0;
 
-        properties.forEach(prop => {
+        properties.forEach((prop, index) => {
             const matchesStatus = currentStatusFilter === 'all' || prop.status === currentStatusFilter;
             const matchesType = currentTypeFilter === 'all' || prop.propertyType === currentTypeFilter;
 
@@ -286,6 +391,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p style="margin: 0 0 10px; font-size: 12px; color: #666;">${prop.location}</p>
                     </div>
                 `);
+
+                mapFeature.on('dblclick', (e) => {
+                    L.DomEvent.stopPropagation(e); 
+                    window.flyToProperty(index);
+                });
+
                 markersLayer.addLayer(mapFeature);
             }
 
@@ -306,9 +417,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 sitePlanHTML = `<button class="secondary-btn" onclick="openModal('${prop.sitePlan}', '${prop.name}')">VIEW SITE PLAN</button>`;
             }
 
-            let dataGridHTML = '';
+            let financialGridHTML = '';
             if (isClosed) {
-                dataGridHTML = `
+                financialGridHTML = `
                     <div class="card-data-grid">
                         <div class="data-row">
                             <div class="data-cell"><strong>${prop.irr || 'TBD'}</strong><span>Internal Rate of Return</span></div>
@@ -318,19 +429,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
             } else {
-                dataGridHTML = `
+                financialGridHTML = `
                     <div class="card-data-grid">
                         <div class="data-row">
                             <div class="data-cell"><strong>${prop.minInvestment || 'TBD'}</strong><span>Minimum Investment</span></div>
                             <div class="data-cell"><strong>${prop.offeringSize || 'TBD'}</strong><span>Offering size</span></div>
                             <div class="data-cell"><strong>${prop.secType || 'TBD'}</strong><span>SEC Type</span></div>
                         </div>
+                        <div class="data-row">
+                            <div class="data-cell"><strong>${prop.dealType || 'TBD'}</strong><span>Deal Type</span></div>
+                            <div class="data-cell"><strong>${prop.investmentType || 'TBD'}</strong><span>Investment Type</span></div>
+                            <div class="data-cell"><strong>${prop.propertyType || 'TBD'}</strong><span>Property Type</span></div>
+                        </div>
                     </div>
                 `;
             }
 
             const cardHTML = `
-                <div class="${cardClass}">
+                <div class="${cardClass}" ondblclick="flyToProperty(${index})" style="cursor: pointer;" title="Double-click to view on map">
                     <div class="property-img-wrapper">
                         <div class="property-img" style="background-image: url('${prop.image}');"></div>
                         ${ribbonHTML}
@@ -342,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <a href="${buttonLink}" ${isClosed || isComingSoon ? '' : 'target="_blank"'} class="${btnClass}">${buttonText}</a>
                         ${sitePlanHTML}
                     </div>
-                    ${dataGridHTML}
+                    ${financialGridHTML}
                 </div>
             `;
 
@@ -401,4 +517,34 @@ function openModal(imageSrc, propertyName) {
 function closeModal() {
     document.getElementById('site-plan-modal').style.display = 'none';
     document.getElementById('modal-image').src = '';
+}
+
+// =========================================
+// Dark Mode Toggle Logic
+// =========================================
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    if (darkModeToggle) {
+        darkModeToggle.innerText = '☀️ Light Mode';
+        darkModeToggle.style.color = '#e0e0e0';
+    }
+}
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            darkModeToggle.innerText = '☀️ Light Mode';
+            darkModeToggle.style.color = '#e0e0e0';
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeToggle.innerText = '🌙 Dark Mode';
+            darkModeToggle.style.color = '#333';
+        }
+    });
 }
