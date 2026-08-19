@@ -206,11 +206,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const mapElement = document.getElementById('portfolio-map');
     let map, markersLayer;
     
-    // Configure Map Container Layout (Stacked vertically)
+    // Inject Demographics Bottom Bar beneath the Map container
     if (mapElement && !document.getElementById('demo-popup')) {
         const mapContainer = mapElement.parentElement;
-        
-        mapContainer.style.display = 'block'; // Stacks map and demographics vertically
+        mapContainer.style.display = 'block';
 
         const popupHTML = `
             <div id="demo-popup" class="demo-popup-side">
@@ -276,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         markersLayer = L.layerGroup().addTo(map);
     }
 
-    // Global function to handle zoom and side-panel toggle
+    // Global function to handle zoom and bottom-bar toggle
     window.flyToProperty = function(index) {
         const prop = window.portfolioProperties[index];
         if (!prop) return;
@@ -293,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => { 
                 popup.style.display = 'block'; 
                 if (map) {
-                    map.invalidateSize(); // Forces map to adapt to new width
+                    map.invalidateSize();
                     map.flyTo([prop.lat, prop.lng], 19, {
                         animate: true,
                         duration: 1.5
@@ -321,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let visibleActiveCount = 0;
         let visibleClosedCount = 0;
         let visibleSoonCount = 0;
+        let totalVisibleUnits = 0;
 
         properties.forEach((prop, index) => {
             const matchesStatus = currentStatusFilter === 'all' || prop.status === currentStatusFilter;
@@ -335,6 +335,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isActive) visibleActiveCount++;
             if (isClosed) visibleClosedCount++;
             if (isComingSoon) visibleSoonCount++;
+            
+            totalVisibleUnits += (prop.units || 0);
             
             let ribbonHTML = '';
             if (isClosed) {
@@ -470,6 +472,21 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleSectionVisibility(activeContainer, visibleActiveCount);
         toggleSectionVisibility(comingSoonContainer, visibleSoonCount);
         toggleSectionVisibility(closedContainer, visibleClosedCount);
+
+        // Update Counter Attributes Dynamically
+        const totalProjectsCount = visibleActiveCount + visibleClosedCount + visibleSoonCount;
+        
+        const projectCountEl = document.getElementById('project-count');
+        if (projectCountEl) {
+            projectCountEl.setAttribute('data-target', totalProjectsCount);
+        }
+
+        const unitCountEl = document.getElementById('unit-count');
+        if (unitCountEl) {
+            unitCountEl.setAttribute('data-target', totalVisibleUnits);
+        }
+
+        runCounters();
     };
 
     const toggleSectionVisibility = (container, count) => {
@@ -507,6 +524,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderPortfolio();
 });
+
+// Counter Animation Function
+function runCounters() {
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+
+    counters.forEach(counter => {
+        const targetAttr = counter.getAttribute('data-target');
+        if (!targetAttr) return;
+        const target = +targetAttr;
+        let count = 0;
+        
+        const updateCount = () => {
+            const increment = target / speed;
+            if (count < target) {
+                count += increment;
+                counter.innerText = Math.ceil(count).toLocaleString();
+                setTimeout(updateCount, 15);
+            } else {
+                counter.innerText = target.toLocaleString();
+            }
+        };
+        
+        updateCount();
+    });
+}
 
 function openModal(imageSrc, propertyName) {
     document.getElementById('modal-title').innerText = propertyName + " - Site Plan";
