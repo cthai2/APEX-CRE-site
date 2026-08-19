@@ -5,12 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
             location: "1512 South Main, Anahuac, TX 77514",
             lat: 29.7730,
             lng: -94.6820,
-            boundary: [
-                [29.7735, -94.6825],
-                [29.7735, -94.6815],
-                [29.7725, -94.6815],
-                [29.7725, -94.6825]
-            ],
             image: "images/trinity-bay-rv-park-&-lodging/photo1.jpg",
             link: "https://apex_cre.cashflowportal.com/offering/a0832e9a943c48b5af6bdb5ee9543614",
             sitePlan: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2000&auto=format&fit=crop", 
@@ -206,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const mapElement = document.getElementById('portfolio-map');
     let map, markersLayer;
     
-    // Inject Demographics Bottom Bar beneath the Map container
     if (mapElement && !document.getElementById('demo-popup')) {
         const mapContainer = mapElement.parentElement;
         mapContainer.style.display = 'block';
@@ -275,7 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
         markersLayer = L.layerGroup().addTo(map);
     }
 
-    // Global function to handle zoom and bottom-bar toggle
     window.flyToProperty = function(index) {
         const prop = window.portfolioProperties[index];
         if (!prop) return;
@@ -369,23 +361,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     fillColor = '#ffc107'; 
                 }
 
-                let mapFeature;
-                if (prop.boundary) {
-                    mapFeature = L.polygon(prop.boundary, {
-                        color: strokeColor,
-                        fillColor: fillColor,
-                        fillOpacity: 0.5,
-                        weight: 3
-                    });
-                } else {
-                    mapFeature = L.circleMarker([prop.lat, prop.lng], {
-                        radius: 8,
-                        color: strokeColor,
-                        weight: 3,
-                        fillColor: fillColor,
-                        fillOpacity: 1
-                    });
-                }
+                // Standard clean circle marker for every property pin
+                let mapFeature = L.circleMarker([prop.lat, prop.lng], {
+                    radius: 8,
+                    color: strokeColor,
+                    weight: 3,
+                    fillColor: fillColor,
+                    fillOpacity: 1
+                });
                 
                 mapFeature.bindPopup(`
                     <div style="text-align: center; padding: 5px;">
@@ -473,7 +456,6 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleSectionVisibility(comingSoonContainer, visibleSoonCount);
         toggleSectionVisibility(closedContainer, visibleClosedCount);
 
-        // Update Counter Attributes Dynamically
         const totalProjectsCount = visibleActiveCount + visibleClosedCount + visibleSoonCount;
         
         const projectCountEl = document.getElementById('project-count');
@@ -525,7 +507,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPortfolio();
 });
 
-// Counter Animation Function
 function runCounters() {
     const counters = document.querySelectorAll('.counter');
     const speed = 200;
