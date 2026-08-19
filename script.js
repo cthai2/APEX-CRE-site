@@ -183,17 +183,17 @@ document.addEventListener("DOMContentLoaded", () => {
             maxZoom: 19
         });
 
-        // Initialize map with Satellite as default
+        // Initialize map with Street Map as default
         map = L.map('portfolio-map', {
             center: [31.9686, -96.9018],
             zoom: 6,
-            layers: [satelliteLayer]
+            layers: [streetLayer]
         });
 
         // Add Layer Control Switch
         const baseMaps = {
-            "Satellite": satelliteLayer,
-            "Street Map": streetLayer
+            "Street Map": streetLayer,
+            "Satellite": satelliteLayer
         };
         L.control.layers(baseMaps).addTo(map);
 
