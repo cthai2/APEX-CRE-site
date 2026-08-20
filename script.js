@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+3.2%",
             medianIncome: "$68,500",
             crimeRating: "A-",
-            prefReturn: 0.07, // 7% Preferred Return
-            equityMultiple: 2.1, // Projected Exit Multiple
+            prefReturn: 0.07,
+            equityMultiple: 2.1,
             highlights: [
                 "Below-market daily/monthly rates with immediate upside through professional management",
                 "Expansion acreage ready for pad site development",
@@ -307,14 +307,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Global Live Calculator Update Function
     window.updateCalc = function(index, sliderVal) {
         const prop = window.portfolioProperties[index];
         const val = parseInt(sliderVal);
         
         document.getElementById(`invest-val-${index}`).innerText = '$' + val.toLocaleString();
         
-        // Calculations
         const annualPref = val * (prop.prefReturn || 0.07);
         const projectedExitValue = val * (prop.equityMultiple || 2.0);
 
@@ -322,7 +320,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(`total-return-${index}`).innerText = '$' + Math.round(projectedExitValue).toLocaleString();
     };
 
-    // Export / Print Snapshot Generator
+    // Copy Share Link Function
+    window.shareDeal = function(index, btnElement) {
+        const prop = window.portfolioProperties[index];
+        const shareText = `Check out this commercial real estate offering: ${prop.name} located in ${prop.location}. Target Offering: ${prop.offeringSize || 'Available Now'}.`;
+        
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = `<i class="fa-solid fa-check" style="color: #28a745;"></i> Link Copied!`;
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    };
+
     window.exportSnapshot = function(index) {
         const prop = window.portfolioProperties[index];
         const printWindow = window.open('', '_blank');
@@ -530,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
 
-                // Interactive Calculator Widget
+                // Calculator + PDF Snapshot + Share Link Box
                 calculatorHTML = `
                     <div class="calculator-box">
                         <h4>Investor Return Calculator</h4>
@@ -550,6 +563,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <button class="export-pdf-btn" onclick="exportSnapshot(${index})">
                             <i class="fa-solid fa-file-arrow-down"></i> Download Deal Snapshot (PDF)
+                        </button>
+                        <button class="share-link-btn" onclick="shareDeal(${index}, this)">
+                            <i class="fa-solid fa-share-nodes"></i> Copy Share Link
                         </button>
                     </div>
                 `;

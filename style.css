@@ -2290,3 +2290,39 @@ body.dark-mode .export-pdf-btn:hover {
     background-color: #e0e0e0;
     color: #121212;
 }
+/* =========================================
+   37. Share Link Button Styles
+   ========================================= */
+.share-link-btn {
+    background-color: transparent;
+    border: 1px solid #dcdcdc;
+    color: var(--primary-color, #0d1b2a);
+    padding: 8px;
+    font-size: 0.72rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.share-link-btn:hover {
+    background-color: #f0f4f8;
+    border-color: var(--primary-color, #0d1b2a);
+}
+
+body.dark-mode .share-link-btn {
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode .share-link-btn:hover {
+    background-color: #2a2a2a;
+    border-color: #e0e0e0;
+}
