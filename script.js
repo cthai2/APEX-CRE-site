@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="footer">
-                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-539-7489</strong></p>
+                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-123-4567</strong></p>
                     <p>Disclaimer: Private real estate investments carry risk. Past performance is not indicative of future results.</p>
                 </div>
 
