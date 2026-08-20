@@ -243,18 +243,37 @@ document.addEventListener("DOMContentLoaded", () => {
             maxZoom: 19
         });
 
-        map = L.map('portfolio-map', {
+        const bordersOverlay = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Boundaries &copy; Esri',
+            maxZoom: 19,
+            opacity: 0.9
+        });
+
+        const parcelLinesOverlay = L.tileLayer('https://tiles.arcgis.com/tiles/KzeiCaQsMoeCfoCq/arcgis/rest/services/Regrid_Nationwide_Parcel_Boundaries_v1/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Parcels &copy; Regrid & Esri',
+            maxZoom: 19,
+            opacity: 0.85
+        });
+
+		map = L.map('portfolio-map', {
             center: [31.9686, -96.9018],
             zoom: 6,
             maxZoom: 19,
-            layers: [streetLayer]
+            layers: [satelliteLayer, bordersOverlay, parcelLinesOverlay] // Defaults to Satellite imagery
         });
 
         const baseMaps = {
             "Street Map": streetLayer,
             "Satellite": satelliteLayer
         };
-        L.control.layers(baseMaps).addTo(map);
+
+        const overlayMaps = {
+            "🗺️ State & Regional Borders": bordersOverlay,
+            "🟩 Toggle Cadastral Parcel Lines": parcelLinesOverlay
+        };
+
+        // { collapsed: false } keeps the layer control menu open and clearly visible on the map
+        L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
         L.Control.ResetView = L.Control.extend({
             options: { position: 'topleft' },
@@ -320,11 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(`total-return-${index}`).innerText = '$' + Math.round(projectedExitValue).toLocaleString();
     };
 
-    // Copy Share Link Function
     window.shareDeal = function(index, btnElement) {
-        const prop = window.portfolioProperties[index];
-        const shareText = `Check out this commercial real estate offering: ${prop.name} located in ${prop.location}. Target Offering: ${prop.offeringSize || 'Available Now'}.`;
-        
         navigator.clipboard.writeText(window.location.href).then(() => {
             const originalHTML = btnElement.innerHTML;
             btnElement.innerHTML = `<i class="fa-solid fa-check" style="color: #28a745;"></i> Link Copied!`;
@@ -392,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="footer">
-                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-123-4567</strong></p>
+                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-539-7489</strong></p>
                     <p>Disclaimer: Private real estate investments carry risk. Past performance is not indicative of future results.</p>
                 </div>
 
@@ -543,7 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
 
-                // Calculator + PDF Snapshot + Share Link Box
                 calculatorHTML = `
                     <div class="calculator-box">
                         <h4>Investor Return Calculator</h4>
