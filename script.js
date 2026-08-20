@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             location: "515 Ulrich Ln, Crosby, TX 77532",
             lat: 29.8970,
             lng: -95.0450,
-            image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
+            image: "images/Dell_Creek.png",
             link: "https://your-cashflow-portal.com/north-shore",
             status: "active",
             units: 95,
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
             location: "304 Freeny Drive, Kenedy, TX 78119",
             lat: 28.8200,
             lng: -97.8600,
-            image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
+            image: "images/Kenedy_Village.jpg",
             link: "#",
             status: "coming-soon",
             units: 0,
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             location: "660 Co Rd 3325, Emory, TX 75440",
             lat: 32.8767,
             lng: -95.7671,
-            image: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop",
+            image: "images/North_Shore_Landing.jpg",
             link: "#",
             status: "coming-soon",
             units: 0,
@@ -255,16 +255,16 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: 0.85
         });
 
-		map = L.map('portfolio-map', {
+        map = L.map('portfolio-map', {
             center: [31.9686, -96.9018],
             zoom: 6,
             maxZoom: 19,
-            layers: [satelliteLayer, bordersOverlay, parcelLinesOverlay] // Defaults to Satellite imagery
+            layers: [satelliteLayer, bordersOverlay, parcelLinesOverlay]
         });
 
         const baseMaps = {
-            "Street Map": streetLayer,
-            "Satellite": satelliteLayer
+            "Satellite": satelliteLayer,
+            "Street Map": streetLayer
         };
 
         const overlayMaps = {
@@ -272,7 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "🟩 Toggle Cadastral Parcel Lines": parcelLinesOverlay
         };
 
-        // { collapsed: false } keeps the layer control menu open and clearly visible on the map
         L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
         L.Control.ResetView = L.Control.extend({
