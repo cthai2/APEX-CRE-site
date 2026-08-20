@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sitePlan: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2000&auto=format&fit=crop", 
             status: "active",
             units: 120,
-            minInvestment: "$50,000",
+            minInvestment: 50000,
             offeringSize: "$2,800,000",
             secType: "506(b)",
             dealType: "Direct Syndication",
@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+3.2%",
             medianIncome: "$68,500",
             crimeRating: "A-",
+            prefReturn: 0.07, // 7% Preferred Return
+            equityMultiple: 2.1, // Projected Exit Multiple
             highlights: [
                 "Below-market daily/monthly rates with immediate upside through professional management",
                 "Expansion acreage ready for pad site development",
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "https://your-cashflow-portal.com/north-shore",
             status: "active",
             units: 95,
-            minInvestment: "$50,000",
+            minInvestment: 50000,
             offeringSize: "$1,990,000",
             secType: "506(b)",
             dealType: "Direct Syndication",
@@ -45,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+5.1%",
             medianIncome: "$72,400",
             crimeRating: "B+",
+            prefReturn: 0.07,
+            equityMultiple: 2.0,
             highlights: [
                 "Below-market daily/monthly rates with immediate upside through professional management",
                 "Expansion acreage ready for pad site development",
@@ -78,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "#",
             status: "coming-soon",
             units: 0,
-            minInvestment: "TBD",
+            minInvestment: 25000,
             offeringSize: "TBD",
             secType: "TBD",
             dealType: "Direct Syndication",
@@ -88,6 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+2.1%",
             medianIncome: "$55,000",
             crimeRating: "B",
+            prefReturn: 0.08,
+            equityMultiple: 1.9,
             highlights: [
                 "Positioned for workforce and transient housing demand in the Kenedy region",
                 "Significant value-add potential through site and operational enhancements"
@@ -102,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "#",
             status: "coming-soon",
             units: 0,
-            minInvestment: "TBD",
+            minInvestment: 25000,
             offeringSize: "TBD",
             secType: "TBD",
             dealType: "Direct Syndication",
@@ -112,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+1.8%",
             medianIncome: "$48,900",
             crimeRating: "B-",
+            prefReturn: 0.08,
+            equityMultiple: 1.9,
             highlights: [
                 "Strategically located near Lake Murray recreation and attractions",
                 "Value-add opportunity through expansion and operational improvements"
@@ -126,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "#",
             status: "coming-soon",
             units: 0,
-            minInvestment: "TBD",
+            minInvestment: 50000,
             offeringSize: "TBD",
             secType: "TBD",
             dealType: "Direct Syndication",
@@ -136,6 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+6.5%",
             medianIncome: "$76,200",
             crimeRating: "A-",
+            prefReturn: 0.07,
+            equityMultiple: 2.2,
             highlights: [
                 "Located in the rapidly growing Conroe market near major thoroughfares",
                 "Strong value-add opportunity through operational and site improvements"
@@ -150,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "#",
             status: "coming-soon",
             units: 0,
-            minInvestment: "TBD",
+            minInvestment: 50000,
             offeringSize: "TBD",
             secType: "TBD",
             dealType: "Direct Syndication",
@@ -160,6 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
             popGrowth: "+4.1%",
             medianIncome: "$59,000",
             crimeRating: "A",
+            prefReturn: 0.07,
+            equityMultiple: 2.0,
             highlights: [
                 "Currently in the underwriting phase",
                 "Join our investor list for early access and deal alerts"
@@ -185,7 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // Priority Sort
     properties.sort((a, b) => {
         const getFinancialWeight = (prop) => {
             const valStr = prop.annualizedReturn || prop.irr || prop.offeringSize || "0";
@@ -296,6 +307,91 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    // Global Live Calculator Update Function
+    window.updateCalc = function(index, sliderVal) {
+        const prop = window.portfolioProperties[index];
+        const val = parseInt(sliderVal);
+        
+        document.getElementById(`invest-val-${index}`).innerText = '$' + val.toLocaleString();
+        
+        // Calculations
+        const annualPref = val * (prop.prefReturn || 0.07);
+        const projectedExitValue = val * (prop.equityMultiple || 2.0);
+
+        document.getElementById(`annual-pref-${index}`).innerText = '$' + Math.round(annualPref).toLocaleString();
+        document.getElementById(`total-return-${index}`).innerText = '$' + Math.round(projectedExitValue).toLocaleString();
+    };
+
+    // Export / Print Snapshot Generator
+    window.exportSnapshot = function(index) {
+        const prop = window.portfolioProperties[index];
+        const printWindow = window.open('', '_blank');
+        
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>${prop.name} - Deal Snapshot | APEX CRE</title>
+                <style>
+                    body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; padding: 40px; line-height: 1.6; }
+                    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0d1b2a; padding-bottom: 20px; margin-bottom: 30px; }
+                    .header h1 { color: #0d1b2a; font-size: 1.8rem; margin: 0; }
+                    .header p { color: #e0a96d; font-weight: bold; margin: 0; text-transform: uppercase; }
+                    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+                    .property-img { width: 100%; height: 250px; background-image: url('${prop.image}'); background-size: cover; background-position: center; border-radius: 6px; }
+                    .metrics-box { background: #f8f9fa; padding: 20px; border-radius: 6px; border: 1px solid #ddd; }
+                    .metrics-box h3 { margin-top: 0; color: #0d1b2a; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+                    .metric-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
+                    .footer { text-align: center; border-top: 1px solid #ddd; padding-top: 20px; font-size: 0.8rem; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <div>
+                        <h1>${prop.name}</h1>
+                        <p>${prop.location}</p>
+                    </div>
+                    <div>
+                        <h2 style="color: #0d1b2a; margin: 0;">APEX CRE PARTNERS</h2>
+                        <p style="text-align: right; font-size: 0.8rem; color: #777;">Confidential Deal Summary</p>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div>
+                        <div class="property-img"></div>
+                        <h4 style="margin-top: 20px; color: #0d1b2a;">Market Demographics</h4>
+                        <ul>
+                            <li>Population: <strong>${prop.population || 'TBD'}</strong></li>
+                            <li>Population Growth: <strong>${prop.popGrowth || 'TBD'}</strong></li>
+                            <li>Median Household Income: <strong>${prop.medianIncome || 'TBD'}</strong></li>
+                            <li>Neighborhood Crime Rating: <strong>${prop.crimeRating || 'TBD'}</strong></li>
+                        </ul>
+                    </div>
+                    <div class="metrics-box">
+                        <h3>Underwriting Snapshot</h3>
+                        <div class="metric-row"><span>Property Type:</span> <strong>${prop.propertyType}</strong></div>
+                        <div class="metric-row"><span>Status:</span> <strong style="text-transform: uppercase;">${prop.status}</strong></div>
+                        <div class="metric-row"><span>Offering Size:</span> <strong>${prop.offeringSize}</strong></div>
+                        <div class="metric-row"><span>Min Investment:</span> <strong>$${Number(prop.minInvestment).toLocaleString()}</strong></div>
+                        <div class="metric-row"><span>Target IRR:</span> <strong>${prop.irr || prop.annualizedReturn || '20-24%'}</strong></div>
+                        <div class="metric-row"><span>Preferred Return:</span> <strong>${prop.preferredReturn || '7%'}</strong></div>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-539-7489</strong></p>
+                    <p>Disclaimer: Private real estate investments carry risk. Past performance is not indicative of future results.</p>
+                </div>
+
+                <script>
+                    window.onload = function() { window.print(); }
+                </script>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    };
+
     const activeContainer = document.getElementById('active-container');
     const closedContainer = document.getElementById('closed-container');
     const comingSoonContainer = document.getElementById('coming-soon-container');
@@ -361,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     fillColor = '#ffc107'; 
                 }
 
-                // Standard clean circle marker for every property pin
                 let mapFeature = L.circleMarker([prop.lat, prop.lng], {
                     radius: 8,
                     color: strokeColor,
@@ -403,6 +498,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             let financialGridHTML = '';
+            let calculatorHTML = '';
+            
             if (isClosed) {
                 financialGridHTML = `
                     <div class="card-data-grid">
@@ -414,10 +511,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
             } else {
+                const defaultInv = prop.minInvestment || 50000;
+                const defaultPref = Math.round(defaultInv * (prop.prefReturn || 0.07));
+                const defaultTotal = Math.round(defaultInv * (prop.equityMultiple || 2.0));
+
                 financialGridHTML = `
                     <div class="card-data-grid">
                         <div class="data-row">
-                            <div class="data-cell"><strong>${prop.minInvestment || 'TBD'}</strong><span>Minimum Investment</span></div>
+                            <div class="data-cell"><strong>$${Number(defaultInv).toLocaleString()}</strong><span>Minimum Investment</span></div>
                             <div class="data-cell"><strong>${prop.offeringSize || 'TBD'}</strong><span>Offering size</span></div>
                             <div class="data-cell"><strong>${prop.secType || 'TBD'}</strong><span>SEC Type</span></div>
                         </div>
@@ -426,6 +527,30 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div class="data-cell"><strong>${prop.investmentType || 'TBD'}</strong><span>Investment Type</span></div>
                             <div class="data-cell"><strong>${prop.propertyType || 'TBD'}</strong><span>Property Type</span></div>
                         </div>
+                    </div>
+                `;
+
+                // Interactive Calculator Widget
+                calculatorHTML = `
+                    <div class="calculator-box">
+                        <h4>Investor Return Calculator</h4>
+                        <div class="calc-slider-group">
+                            <label>Investment Amount: <span id="invest-val-${index}">$${Number(defaultInv).toLocaleString()}</span></label>
+                            <input type="range" min="25000" max="250000" step="10000" value="${defaultInv}" oninput="updateCalc(${index}, this.value)">
+                        </div>
+                        <div class="calc-results-grid">
+                            <div class="calc-result-item">
+                                <strong>Est. Annual Pref</strong>
+                                <span id="annual-pref-${index}">$${defaultPref.toLocaleString()}</span>
+                            </div>
+                            <div class="calc-result-item">
+                                <strong>Est. Exit Payout</strong>
+                                <span id="total-return-${index}">$${defaultTotal.toLocaleString()}</span>
+                            </div>
+                        </div>
+                        <button class="export-pdf-btn" onclick="exportSnapshot(${index})">
+                            <i class="fa-solid fa-file-arrow-down"></i> Download Deal Snapshot (PDF)
+                        </button>
                     </div>
                 `;
             }
@@ -444,6 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${sitePlanHTML}
                     </div>
                     ${financialGridHTML}
+                    ${calculatorHTML}
                 </div>
             `;
 
