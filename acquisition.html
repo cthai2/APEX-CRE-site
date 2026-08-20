@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Chris Thai">
-    <title>Contact Us | APEX CRE</title>
+    <title>Acquisitions | APEX CRE</title>
+    
+    <!-- Link to your existing CSS file -->
     <link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -30,92 +31,114 @@
                 <li><a href="acquisition.html">ACQUISITION</a></li>
             </ul>
         </nav>
-        <a href="#login" class="investor-login">Investor Portal</a>
+        <a href="under-construction.html" class="investor-login">Investor Portal</a>
     </header>
-
+	
     <!-- Page Header with City Skyline Background -->
-    <section class="contact-hero-header">
-        <h1>Contact Us</h1>
+    <section class="acq-hero-header">
+        <h1>Acquisitions Criteria & Process</h1>
     </section>
 
-    <!-- Contact Info & Map Section -->
-    <section class="contact-info-section">
-        <div class="contact-info-container">
-            <div class="contact-intro">
-                <h2>Contact <span class="text-gold">APEX CRE</span></h2>
-                <p>We're here to answer your questions and discuss investment opportunities.</p>
+    <!-- Top Section: 5-Step Process Timeline -->
+    <section class="process-timeline-section">
+        <div class="timeline-container">
+            
+            <div class="timeline-steps-bar">
+                <div class="step-badge active">01</div>
+                <div class="step-badge">02</div>
+                <div class="step-badge">03</div>
+                <div class="step-badge">04</div>
+                <div class="step-badge">05</div>
             </div>
 
-            <div class="info-map-grid">
-                <!-- Left Card: Contact Details -->
-                <div class="info-card">
-                    <div class="info-group">
-                        <strong>Phone</strong>
-                        <p>512-123-4567</p>
-                    </div>
-                    <div class="info-group">
-                        <strong>Email</strong>
-                        <p>investors@apexcre.com</p>
-                    </div>
-                    <div class="info-group">
-                        <strong>Location</strong>
-                        <p>Austin / Dallas / Houston, TX</p>
-                    </div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="step-subtitle">STEP ONE</span>
+                    <h3>Sourcing</h3>
+                    <p>We leverage our extensive network of brokers, owners, and industry contacts to identify off-market and on-market opportunities.</p>
                 </div>
+                <div class="process-card">
+                    <span class="step-subtitle">STEP TWO</span>
+                    <h3>Analysis</h3>
+                    <p>Our team conducts rigorous underwriting, market research, and financial modeling to evaluate every deal against conservative assumptions.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-subtitle">STEP THREE</span>
+                    <h3>Due Diligence</h3>
+                    <p>Comprehensive physical, environmental, legal, and financial review to uncover risks and confirm value.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-subtitle">STEP FOUR</span>
+                    <h3>Execution</h3>
+                    <p>Decisive action backed by extensive financial resources and proven transactional capability.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-subtitle">STEP FIVE</span>
+                    <h3>Value Creation</h3>
+                    <p>Post-acquisition repositioning, lease-up, and capital improvements managed by our integrated in-house team.</p>
+                </div>
+            </div>
 
-                <!-- Right Card: Map Mockup / Embedded Map -->
-                <div class="map-card">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110195.42435773129!2d-97.88647895!3d30.5787595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b2d6a505b3857%3A0x231b673248386345!2sLeander%2C%20TX!5e0!3m2!1sen!2sus!4v1650000000000!5m2!1sen!2sus" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy">
-                    </iframe>
+        </div>
+    </section>
+
+    <!-- Middle Section: What We're Looking For -->
+    <section class="criteria-section">
+        <div class="criteria-container">
+            <h2 class="section-title">What We're Looking For</h2>
+
+            <div class="criteria-grid">
+                <div class="criteria-card">
+                    <div class="criteria-num">01</div>
+                    <p>Transaction values from $1 million to $500 million</p>
+                </div>
+                <div class="criteria-card">
+                    <div class="criteria-num">02</div>
+                    <p>Markets with strong population and employment growth</p>
+                </div>
+                <div class="criteria-card">
+                    <div class="criteria-num">03</div>
+                    <p>Value-add opportunities and development-ready parcels</p>
+                </div>
+                <div class="criteria-card">
+                    <div class="criteria-num">04</div>
+                    <p>Vacant anchor spaces with expansion or re-tenanting potential</p>
+                </div>
+                <div class="criteria-card">
+                    <div class="criteria-num">05</div>
+                    <p>Sub-performing or non-performing loans secured by retail or commercial properties</p>
+                </div>
+                <div class="criteria-card">
+                    <div class="criteria-num">06</div>
+                    <p>Build-to-suit opportunities in high-demand corridors</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section class="contact-form-section">
-        <div class="form-container">
-            <form action="#" method="POST" class="inquiry-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name *</label>
-                        <input type="text" id="first-name" name="first-name" required placeholder="First Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name *</label>
-                        <input type="text" id="last-name" name="last-name" required placeholder="Last Name">
-                    </div>
-                </div>
+    <!-- Bottom Section: Have a Property to Sell? Callout Box -->
+    <section class="sell-property-section">
+        <div class="sell-box">
+            <h2>Have a Property to Sell?</h2>
+            <p>We are always evaluating new acquisition opportunities. If you have a commercial property, development parcel, or note for sale, we’d like to hear from you.</p>
+            <p class="contact-person">Contact: David Culler</p>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone *</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="Phone">
-                    </div>
-                </div>
+            <div class="sell-action-bar">
+                <a href="mailto:investors@apexcre.com" class="sell-action-link">
+                    <span>✉</span> investors@apexcre.com
+                </a>
+                <a href="tel:5121234567" class="sell-action-link">
+                    <span>📞</span> 512-123-4567
+                </a>
+            </div>
+        </div>
+    </section>
 
-                <div class="form-group full-width">
-                    <label for="message">Message or Questions</label>
-                    <textarea id="message" name="message" rows="5" placeholder="How can we help you?"></textarea>
-                </div>
-
-                <div class="form-checkbox">
-                    <input type="checkbox" id="terms-agree" required>
-                    <label for="terms-agree">I agree to <a href="#" target="_blank">terms & conditions</a> provided by the company. By providing my phone number, I agree to receive text messages from the business.</label>
-                </div>
-
-                <button type="submit" class="form-submit-btn">Register Now</button>
-            </form>
+    <!-- Philosophy / Disclaimer Banner -->
+    <section class="philosophy-banner">
+        <div class="philosophy-container">
+            <h2><span>Our</span> <span class="text-gold">Philosophy</span></h2>
+            <p>Although investing in large commercial properties generally reduces your risk relative to investing in only single-unit properties, these should be viewed as risky and speculative investments, like any private investment in real estate. You could lose some or all of your investment.</p>
         </div>
     </section>
 
@@ -144,7 +167,7 @@
                 </div>
             </div>
             <div class="footer-btn-box">
-                <a href="#login" class="footer-invest-btn">Invest Now</a>
+                <a href="under-construction.html" class="footer-invest-btn">Invest Now</a>
             </div>
         </div>
 
@@ -171,14 +194,12 @@
             <div class="footer-col">
                 <ul class="footer-links">
                     <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="team.html">About Us</a></li>
                     <li><a href="faq.html">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <ul class="footer-links">
-                    <li><a href="login.html">Investor Portal</a></li>
-                    <li><a href="under-construction.html">Submit your Deal</a></li>
+                    <li><a href="acquisitions.html">Acquisitions</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
                     <li><a href="terms.html">Terms And Conditions</a></li>
                     <li><a href="disclaimer.html">Investment Disclaimer</a></li>
@@ -191,6 +212,5 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>
