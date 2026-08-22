@@ -2387,3 +2387,183 @@ body.dark-mode .share-link-btn:hover {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+/* =========================================
+   38. Custom Accessibility Widget
+   ========================================= */
+
+/* The Floating Button */
+.a11y-main-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0056b3; /* UserWay Blue */
+    color: #ffffff;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.a11y-main-btn:hover {
+    transform: scale(1.05);
+}
+
+/* The Popup Menu Panel */
+.a11y-panel {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    width: 320px;
+    background-color: #f4f6f8;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 9998;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: bottom right;
+}
+
+.a11y-panel.hidden {
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.a11y-header {
+    background-color: #0056b3;
+    color: #ffffff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.a11y-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#a11y-close-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* The Grid Buttons */
+.a11y-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px;
+}
+
+.a11y-option {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #333333;
+    transition: all 0.2s ease;
+}
+
+.a11y-option i {
+    font-size: 1.5rem;
+}
+
+.a11y-option span {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.a11y-option:hover {
+    border-color: #0056b3;
+}
+
+.a11y-option.active {
+    background-color: #e6f0fa;
+    border-color: #0056b3;
+    color: #0056b3;
+}
+
+/* Reset Button */
+.a11y-reset-btn {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.a11y-reset-btn:hover {
+    background-color: #004494;
+}
+
+/* =========================================
+   39. Accessibility Effect Classes
+   ========================================= */
+
+/* 1. High Contrast */
+body.a11y-high-contrast {
+    filter: contrast(130%) saturate(120%);
+}
+
+/* 2. Highlight Links */
+body.a11y-highlight-links a {
+    text-decoration: underline !important;
+    text-decoration-color: #ffc107 !important;
+    text-decoration-thickness: 3px !important;
+    background-color: rgba(255, 193, 7, 0.2) !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+/* 3. Bigger Text */
+body.a11y-bigger-text,
+body.a11y-bigger-text p,
+body.a11y-bigger-text span,
+body.a11y-bigger-text a,
+body.a11y-bigger-text li {
+    font-size: 120% !important;
+}
+
+/* 4. Text Spacing */
+body.a11y-text-spacing {
+    letter-spacing: 0.1em !important;
+    word-spacing: 0.2em !important;
+}
+
+/* 5. Dyslexia Friendly Font */
+body.a11y-dyslexia-font,
+body.a11y-dyslexia-font * {
+    font-family: 'Comic Sans MS', 'OpenDyslexic', sans-serif !important;
+}
+
+/* 6. Line Height */
+body.a11y-line-height {
+    line-height: 2 !important;
+}

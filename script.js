@@ -756,3 +756,100 @@ if (darkModeToggle) {
         }
     });
 }
+
+// =========================================
+// Custom Accessibility Menu Widget
+// =========================================
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Inject the HTML for the Widget
+    const a11yHTML = `
+    <div id="a11y-widget-container">
+        <!-- Floating Button -->
+        <button id="a11y-main-btn" class="a11y-main-btn" aria-label="Open Accessibility Menu">
+            <i class="fa-solid fa-universal-access"></i>
+        </button>
+
+        <!-- Slide-out Panel -->
+        <div id="a11y-panel" class="a11y-panel hidden">
+            <div class="a11y-header">
+                <h3>Accessibility Menu</h3>
+                <button id="a11y-close-btn" aria-label="Close">&times;</button>
+            </div>
+            
+            <div class="a11y-grid">
+                <button class="a11y-option" data-action="contrast">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                    <span>Contrast +</span>
+                </button>
+                <button class="a11y-option" data-action="links">
+                    <i class="fa-solid fa-link"></i>
+                    <span>Highlight Links</span>
+                </button>
+                <button class="a11y-option" data-action="text">
+                    <i class="fa-solid fa-text-height"></i>
+                    <span>Bigger Text</span>
+                </button>
+                <button class="a11y-option" data-action="spacing">
+                    <i class="fa-solid fa-arrows-left-right"></i>
+                    <span>Text Spacing</span>
+                </button>
+                <button class="a11y-option" data-action="dyslexia">
+                    <i class="fa-solid fa-font"></i>
+                    <span>Dyslexia Friendly</span>
+                </button>
+                <button class="a11y-option" data-action="height">
+                    <i class="fa-solid fa-arrows-up-down"></i>
+                    <span>Line Height</span>
+                </button>
+            </div>
+
+            <button id="a11y-reset-btn" class="a11y-reset-btn">
+                <i class="fa-solid fa-rotate-right"></i> Reset All Settings
+            </button>
+        </div>
+    </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', a11yHTML);
+
+    // 2. Widget Toggle Logic
+    const panel = document.getElementById('a11y-panel');
+    document.getElementById('a11y-main-btn').addEventListener('click', () => {
+        panel.classList.toggle('hidden');
+    });
+    document.getElementById('a11y-close-btn').addEventListener('click', () => {
+        panel.classList.add('hidden');
+    });
+
+    // 3. Accessibility Features Logic
+    const body = document.body;
+    const options = document.querySelectorAll('.a11y-option');
+
+    options.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const action = this.getAttribute('data-action');
+            
+            // Toggle specific CSS classes on the body
+            if(action === 'contrast') body.classList.toggle('a11y-high-contrast');
+            if(action === 'links') body.classList.toggle('a11y-highlight-links');
+            if(action === 'text') body.classList.toggle('a11y-bigger-text');
+            if(action === 'spacing') body.classList.toggle('a11y-text-spacing');
+            if(action === 'dyslexia') body.classList.toggle('a11y-dyslexia-font');
+            if(action === 'height') body.classList.toggle('a11y-line-height');
+        });
+    });
+
+    // 4. Reset Button Logic
+    document.getElementById('a11y-reset-btn').addEventListener('click', () => {
+        body.classList.remove(
+            'a11y-high-contrast', 
+            'a11y-highlight-links', 
+            'a11y-bigger-text', 
+            'a11y-text-spacing', 
+            'a11y-dyslexia-font', 
+            'a11y-line-height'
+        );
+        options.forEach(b => b.classList.remove('active'));
+    });
+});
