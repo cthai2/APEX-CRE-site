@@ -1,3 +1,32 @@
+// =========================================
+// Contact Information Prefill
+// Automatically runs across every page when it loads, instantly finding those placeholders and populating them with your phone number and email:
+// <p>Direct Acquisitions Desk: <span class="data-email"></span> | Phone: <span class="data-phone"></span></p>
+// =========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const myPhone = "512-123-4567";
+    const apexEmail = "acquisitions@apexcre.com";
+
+    // Automatically fill all phone placeholders
+    document.querySelectorAll('.data-phone').forEach(el => {
+        el.innerText = myPhone;
+        if(el.tagName === 'A') {
+            el.href = `tel:${myPhone.replace(/-/g, '')}`;
+        }
+    });
+
+    // Automatically fill all email placeholders
+    document.querySelectorAll('.data-email').forEach(el => {
+        el.innerText = apexEmail;
+        if(el.tagName === 'A') {
+            el.href = `mailto:${apexEmail}`;
+        }
+    });
+});
+
+// =========================================
+// Portfolio, Map, & Interactive Logic
+// =========================================
 document.addEventListener("DOMContentLoaded", () => {
     let properties = [
         {
@@ -406,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="footer">
-                    <p>Contact Investor Relations: <strong>investors@apexcre.com</strong> | Phone: <strong>512-539-7489</strong></p>
+                    <p>Contact Investor Relations: <strong>acquisitions@apexcre.com</strong> | Phone: <strong>512-539-7489</strong></p>
                     <p>Disclaimer: Private real estate investments carry risk. Past performance is not indicative of future results.</p>
                 </div>
 
