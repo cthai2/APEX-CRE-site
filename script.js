@@ -1,10 +1,8 @@
 // =========================================
 // Contact Information Prefill
-// Automatically runs across every page when it loads, instantly finding those placeholders and populating them with your phone number and email:
-// <p>Direct Acquisitions Desk: <span class="data-email"></span> | Phone: <span class="data-phone"></span></p>
 // =========================================
 document.addEventListener("DOMContentLoaded", () => {
-    const myPhone = "512-123-4567";
+    const myPhone = "512-539-7489";
     const apexEmail = "acquisitions@apexcre.com";
 
     // Automatically fill all phone placeholders
@@ -21,6 +19,98 @@ document.addEventListener("DOMContentLoaded", () => {
         if(el.tagName === 'A') {
             el.href = `mailto:${apexEmail}`;
         }
+    });
+});
+
+// =========================================
+// Custom Accessibility Menu Widget
+// =========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const a11yHTML = `
+    <div id="a11y-widget-container">
+        <!-- Floating Button -->
+        <button id="a11y-main-btn" class="a11y-main-btn" aria-label="Open Accessibility Menu">
+            <i class="fa-solid fa-universal-access"></i>
+        </button>
+
+        <!-- Slide-out Panel -->
+        <div id="a11y-panel" class="a11y-panel hidden">
+            <div class="a11y-header">
+                <h3>Accessibility Menu</h3>
+                <button id="a11y-close-btn" aria-label="Close">&times;</button>
+            </div>
+            
+            <div class="a11y-grid">
+                <button class="a11y-option" data-action="contrast">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                    <span>Contrast +</span>
+                </button>
+                <button class="a11y-option" data-action="links">
+                    <i class="fa-solid fa-link"></i>
+                    <span>Highlight Links</span>
+                </button>
+                <button class="a11y-option" data-action="text">
+                    <i class="fa-solid fa-text-height"></i>
+                    <span>Bigger Text</span>
+                </button>
+                <button class="a11y-option" data-action="spacing">
+                    <i class="fa-solid fa-arrows-left-right"></i>
+                    <span>Text Spacing</span>
+                </button>
+                <button class="a11y-option" data-action="dyslexia">
+                    <i class="fa-solid fa-font"></i>
+                    <span>Dyslexia Friendly</span>
+                </button>
+                <button class="a11y-option" data-action="height">
+                    <i class="fa-solid fa-arrows-up-down"></i>
+                    <span>Line Height</span>
+                </button>
+            </div>
+
+            <button id="a11y-reset-btn" class="a11y-reset-btn">
+                <i class="fa-solid fa-rotate-right"></i> Reset All Settings
+            </button>
+        </div>
+    </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', a11yHTML);
+
+    const panel = document.getElementById('a11y-panel');
+    document.getElementById('a11y-main-btn').addEventListener('click', () => {
+        panel.classList.toggle('hidden');
+    });
+    document.getElementById('a11y-close-btn').addEventListener('click', () => {
+        panel.classList.add('hidden');
+    });
+
+    const body = document.body;
+    const options = document.querySelectorAll('.a11y-option');
+
+    options.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const action = this.getAttribute('data-action');
+            
+            if(action === 'contrast') body.classList.toggle('a11y-high-contrast');
+            if(action === 'links') body.classList.toggle('a11y-highlight-links');
+            if(action === 'text') body.classList.toggle('a11y-bigger-text');
+            if(action === 'spacing') body.classList.toggle('a11y-text-spacing');
+            if(action === 'dyslexia') body.classList.toggle('a11y-dyslexia-font');
+            if(action === 'height') body.classList.toggle('a11y-line-height');
+        });
+    });
+
+    document.getElementById('a11y-reset-btn').addEventListener('click', () => {
+        body.classList.remove(
+            'a11y-high-contrast', 
+            'a11y-highlight-links', 
+            'a11y-bigger-text', 
+            'a11y-text-spacing', 
+            'a11y-dyslexia-font', 
+            'a11y-line-height'
+        );
+        options.forEach(b => b.classList.remove('active'));
     });
 });
 
@@ -536,13 +626,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 markersLayer.addLayer(mapFeature);
             }
 
+            // --- ADA Compliant Screen-Reader Optimized HTML ---
             let highlightsHTML = '';
             if (prop.highlights && prop.highlights.length > 0) {
                 highlightsHTML = `
-                    <div class="highlights-box">
-                        <h4>Highlights</h4>
+                    <div class="highlights-box" role="region" aria-label="Investment Highlights">
+                        <h4 aria-hidden="true">Highlights</h4>
                         <ul>
-                            ${prop.highlights.map(item => `<li>${item}</li>`).join('')}
+                            ${prop.highlights.map(item => `<li tabindex="0">${item}</li>`).join('')}
                         </ul>
                     </div>
                 `;
@@ -550,7 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let sitePlanHTML = '';
             if (prop.sitePlan) {
-                sitePlanHTML = `<button class="secondary-btn" onclick="openModal('${prop.sitePlan}', '${prop.name}')">VIEW SITE PLAN</button>`;
+                sitePlanHTML = `<button class="secondary-btn" aria-label="View Site Plan for ${prop.name}" onclick="openModal('${prop.sitePlan}', '${prop.name}')">VIEW SITE PLAN</button>`;
             }
 
             let financialGridHTML = '';
@@ -558,11 +649,20 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (isClosed) {
                 financialGridHTML = `
-                    <div class="card-data-grid">
+                    <div class="card-data-grid" role="group" aria-label="Financial Metrics for ${prop.name}">
                         <div class="data-row">
-                            <div class="data-cell"><strong>${prop.irr || 'TBD'}</strong><span>Internal Rate of Return</span></div>
-                            <div class="data-cell"><strong>${prop.annualizedReturn || 'TBD'}</strong><span>Annualized Return</span></div>
-                            <div class="data-cell"><strong>${prop.preferredReturn || 'TBD'}</strong><span>Preferred Return</span></div>
+                            <div class="data-cell" tabindex="0" aria-label="Internal Rate of Return: ${prop.irr || 'TBD'}">
+                                <strong aria-hidden="true">${prop.irr || 'TBD'}</strong>
+                                <span aria-hidden="true">Internal Rate of Return</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="Annualized Return: ${prop.annualizedReturn || 'TBD'}">
+                                <strong aria-hidden="true">${prop.annualizedReturn || 'TBD'}</strong>
+                                <span aria-hidden="true">Annualized Return</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="Preferred Return: ${prop.preferredReturn || 'TBD'}">
+                                <strong aria-hidden="true">${prop.preferredReturn || 'TBD'}</strong>
+                                <span aria-hidden="true">Preferred Return</span>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -572,58 +672,78 @@ document.addEventListener("DOMContentLoaded", () => {
                 const defaultTotal = Math.round(defaultInv * (prop.equityMultiple || 2.0));
 
                 financialGridHTML = `
-                    <div class="card-data-grid">
+                    <div class="card-data-grid" role="group" aria-label="Financial Metrics for ${prop.name}">
                         <div class="data-row">
-                            <div class="data-cell"><strong>$${Number(defaultInv).toLocaleString()}</strong><span>Minimum Investment</span></div>
-                            <div class="data-cell"><strong>${prop.offeringSize || 'TBD'}</strong><span>Offering size</span></div>
-                            <div class="data-cell"><strong>${prop.secType || 'TBD'}</strong><span>SEC Type</span></div>
+                            <div class="data-cell" tabindex="0" aria-label="Minimum Investment: $${Number(defaultInv).toLocaleString()}">
+                                <strong aria-hidden="true">$${Number(defaultInv).toLocaleString()}</strong>
+                                <span aria-hidden="true">Minimum Investment</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="Offering Size: ${prop.offeringSize || 'TBD'}">
+                                <strong aria-hidden="true">${prop.offeringSize || 'TBD'}</strong>
+                                <span aria-hidden="true">Offering size</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="SEC Type: ${prop.secType || 'TBD'}">
+                                <strong aria-hidden="true">${prop.secType || 'TBD'}</strong>
+                                <span aria-hidden="true">SEC Type</span>
+                            </div>
                         </div>
                         <div class="data-row">
-                            <div class="data-cell"><strong>${prop.dealType || 'TBD'}</strong><span>Deal Type</span></div>
-                            <div class="data-cell"><strong>${prop.investmentType || 'TBD'}</strong><span>Investment Type</span></div>
-                            <div class="data-cell"><strong>${prop.propertyType || 'TBD'}</strong><span>Property Type</span></div>
+                            <div class="data-cell" tabindex="0" aria-label="Deal Type: ${prop.dealType || 'TBD'}">
+                                <strong aria-hidden="true">${prop.dealType || 'TBD'}</strong>
+                                <span aria-hidden="true">Deal Type</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="Investment Type: ${prop.investmentType || 'TBD'}">
+                                <strong aria-hidden="true">${prop.investmentType || 'TBD'}</strong>
+                                <span aria-hidden="true">Investment Type</span>
+                            </div>
+                            <div class="data-cell" tabindex="0" aria-label="Property Type: ${prop.propertyType || 'TBD'}">
+                                <strong aria-hidden="true">${prop.propertyType || 'TBD'}</strong>
+                                <span aria-hidden="true">Property Type</span>
+                            </div>
                         </div>
                     </div>
                 `;
 
                 calculatorHTML = `
-                    <div class="calculator-box">
-                        <h4>Investor Return Calculator</h4>
+                    <div class="calculator-box" role="region" aria-label="Investor Return Calculator for ${prop.name}">
+                        <h4 aria-hidden="true">Investor Return Calculator</h4>
                         <div class="calc-slider-group">
-                            <label>Investment Amount: <span id="invest-val-${index}">$${Number(defaultInv).toLocaleString()}</span></label>
-                            <input type="range" min="25000" max="250000" step="10000" value="${defaultInv}" oninput="updateCalc(${index}, this.value)">
+                            <label for="slider-${index}">
+                                Investment Amount: <span id="invest-val-${index}" aria-live="polite">$${Number(defaultInv).toLocaleString()}</span>
+                            </label>
+                            <input type="range" id="slider-${index}" aria-valuemin="25000" aria-valuemax="250000" aria-valuenow="${defaultInv}" min="25000" max="250000" step="10000" value="${defaultInv}" oninput="updateCalc(${index}, this.value); this.setAttribute('aria-valuenow', this.value)">
                         </div>
-                        <div class="calc-results-grid">
-                            <div class="calc-result-item">
-                                <strong>Est. Annual Pref</strong>
-                                <span id="annual-pref-${index}">$${defaultPref.toLocaleString()}</span>
+                        <div class="calc-results-grid" aria-live="polite">
+                            <div class="calc-result-item" tabindex="0" aria-label="Estimated Annual Preferred Return: $${defaultPref.toLocaleString()}">
+                                <strong aria-hidden="true">Est. Annual Pref</strong>
+                                <span id="annual-pref-${index}" aria-hidden="true">$${defaultPref.toLocaleString()}</span>
                             </div>
-                            <div class="calc-result-item">
-                                <strong>Est. Exit Payout</strong>
-                                <span id="total-return-${index}">$${defaultTotal.toLocaleString()}</span>
+                            <div class="calc-result-item" tabindex="0" aria-label="Estimated Exit Payout: $${defaultTotal.toLocaleString()}">
+                                <strong aria-hidden="true">Est. Exit Payout</strong>
+                                <span id="total-return-${index}" aria-hidden="true">$${defaultTotal.toLocaleString()}</span>
                             </div>
                         </div>
-                        <button class="export-pdf-btn" onclick="exportSnapshot(${index})">
-                            <i class="fa-solid fa-file-arrow-down"></i> Download Deal Snapshot (PDF)
+                        <button class="export-pdf-btn" aria-label="Download Deal Snapshot PDF for ${prop.name}" onclick="exportSnapshot(${index})">
+                            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Deal Snapshot (PDF)
                         </button>
-                        <button class="share-link-btn" onclick="shareDeal(${index}, this)">
-                            <i class="fa-solid fa-share-nodes"></i> Copy Share Link
+                        <button class="share-link-btn" aria-label="Copy Share Link for ${prop.name}" onclick="shareDeal(${index}, this)">
+                            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Copy Share Link
                         </button>
                     </div>
                 `;
             }
 
             const cardHTML = `
-                <div class="${cardClass}" ondblclick="flyToProperty(${index})" style="cursor: pointer;" title="Double-click to view on map">
-                    <div class="property-img-wrapper">
+                <div class="${cardClass}" tabindex="0" aria-label="Portfolio Property: ${prop.name}, Location: ${prop.location}" ondblclick="flyToProperty(${index})" style="cursor: pointer;" title="Double-click to view on map">
+                    <div class="property-img-wrapper" aria-hidden="true">
                         <div class="property-img" style="background-image: url('${prop.image}');"></div>
                         ${ribbonHTML}
                     </div>
                     <div class="property-info">
-                        <h3>${prop.name}</h3>
-                        <p class="location">${prop.location}</p>
+                        <h3 aria-hidden="true">${prop.name}</h3>
+                        <p class="location" aria-hidden="true">${prop.location}</p>
                         ${highlightsHTML}
-                        <a href="${buttonLink}" ${isClosed || isComingSoon ? '' : 'target="_blank"'} class="${btnClass}">${buttonText}</a>
+                        <a href="${buttonLink}" ${isClosed || isComingSoon ? '' : 'target="_blank"'} class="${btnClass}" aria-label="${buttonText} for ${prop.name}">${buttonText}</a>
                         ${sitePlanHTML}
                     </div>
                     ${financialGridHTML}
@@ -756,100 +876,3 @@ if (darkModeToggle) {
         }
     });
 }
-
-// =========================================
-// Custom Accessibility Menu Widget
-// =========================================
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Inject the HTML for the Widget
-    const a11yHTML = `
-    <div id="a11y-widget-container">
-        <!-- Floating Button -->
-        <button id="a11y-main-btn" class="a11y-main-btn" aria-label="Open Accessibility Menu">
-            <i class="fa-solid fa-universal-access"></i>
-        </button>
-
-        <!-- Slide-out Panel -->
-        <div id="a11y-panel" class="a11y-panel hidden">
-            <div class="a11y-header">
-                <h3>Accessibility Menu</h3>
-                <button id="a11y-close-btn" aria-label="Close">&times;</button>
-            </div>
-            
-            <div class="a11y-grid">
-                <button class="a11y-option" data-action="contrast">
-                    <i class="fa-solid fa-circle-half-stroke"></i>
-                    <span>Contrast +</span>
-                </button>
-                <button class="a11y-option" data-action="links">
-                    <i class="fa-solid fa-link"></i>
-                    <span>Highlight Links</span>
-                </button>
-                <button class="a11y-option" data-action="text">
-                    <i class="fa-solid fa-text-height"></i>
-                    <span>Bigger Text</span>
-                </button>
-                <button class="a11y-option" data-action="spacing">
-                    <i class="fa-solid fa-arrows-left-right"></i>
-                    <span>Text Spacing</span>
-                </button>
-                <button class="a11y-option" data-action="dyslexia">
-                    <i class="fa-solid fa-font"></i>
-                    <span>Dyslexia Friendly</span>
-                </button>
-                <button class="a11y-option" data-action="height">
-                    <i class="fa-solid fa-arrows-up-down"></i>
-                    <span>Line Height</span>
-                </button>
-            </div>
-
-            <button id="a11y-reset-btn" class="a11y-reset-btn">
-                <i class="fa-solid fa-rotate-right"></i> Reset All Settings
-            </button>
-        </div>
-    </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', a11yHTML);
-
-    // 2. Widget Toggle Logic
-    const panel = document.getElementById('a11y-panel');
-    document.getElementById('a11y-main-btn').addEventListener('click', () => {
-        panel.classList.toggle('hidden');
-    });
-    document.getElementById('a11y-close-btn').addEventListener('click', () => {
-        panel.classList.add('hidden');
-    });
-
-    // 3. Accessibility Features Logic
-    const body = document.body;
-    const options = document.querySelectorAll('.a11y-option');
-
-    options.forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            const action = this.getAttribute('data-action');
-            
-            // Toggle specific CSS classes on the body
-            if(action === 'contrast') body.classList.toggle('a11y-high-contrast');
-            if(action === 'links') body.classList.toggle('a11y-highlight-links');
-            if(action === 'text') body.classList.toggle('a11y-bigger-text');
-            if(action === 'spacing') body.classList.toggle('a11y-text-spacing');
-            if(action === 'dyslexia') body.classList.toggle('a11y-dyslexia-font');
-            if(action === 'height') body.classList.toggle('a11y-line-height');
-        });
-    });
-
-    // 4. Reset Button Logic
-    document.getElementById('a11y-reset-btn').addEventListener('click', () => {
-        body.classList.remove(
-            'a11y-high-contrast', 
-            'a11y-highlight-links', 
-            'a11y-bigger-text', 
-            'a11y-text-spacing', 
-            'a11y-dyslexia-font', 
-            'a11y-line-height'
-        );
-        options.forEach(b => b.classList.remove('active'));
-    });
-});
