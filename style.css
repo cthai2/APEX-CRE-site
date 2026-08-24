@@ -2567,3 +2567,31 @@ body.a11y-dyslexia-font * {
 body.a11y-line-height {
     line-height: 2 !important;
 }
+/* =========================================
+   40. Mobile Responsiveness for Accessibility Widget
+   ========================================= */
+@media (max-width: 400px) {
+    .a11y-panel {
+        width: calc(100% - 40px); /* Keeps a 20px buffer on both sides */
+        right: 20px;
+        left: 20px;
+        bottom: 85px; 
+    }
+    
+    .a11y-grid {
+        gap: 8px;
+        padding: 15px;
+    }
+    
+    .a11y-option {
+        padding: 12px 5px;
+    }
+    
+    .a11y-option i {
+        font-size: 1.2rem; /* Slightly smaller icons for mobile */
+    }
+    
+    .a11y-option span {
+        font-size: 0.75rem; /* Keeps text on one line */
+    }
+}
