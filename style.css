@@ -38,9 +38,8 @@ a {
     height: 100px; /* Controls how tall the logo is in the menu */
     width: auto;  /* Ensures the logo doesn't stretch or warp */
     display: block;
-    border-radius: 4px; /* Optional: Softens the sharp corners of the image */
+    border-radius: 4px; /* Softens the sharp corners of the image */
 }   
-   
    
 header {
     background-color: var(--primary-color);
@@ -99,53 +98,76 @@ nav ul li a:hover {
 }
 
 /* =========================================
-   4. Hero Section (Homepage)
+   4. Hero Section with Video Background
    ========================================= */
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+.hero-video-container {
+    position: relative;
+    height: 100vh; /* Forces the box to be 100% of the screen height */
+    width: 100%;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: var(--text-light);
+    margin-top: 100px; /* Offsets it so it doesn't hide behind your fixed menu */
+}
+
+/* Forces the video to stretch and cover the box perfectly without warping */
+.hero-video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: 0;
+}
+
+/* The dark blue/navy gradient overlay so your white text remains readable */
+.hero-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.9));
+    z-index: 1;
+}
+
+/* Brings the logo, text, and button to the front layer */
+.hero-video-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
     padding: 0 20px;
-    margin-top: 60px; /* Offset for fixed header */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-.hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
-    font-weight: 300;
-    letter-spacing: 2px;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-bottom: 40px;
-    color: #d1d1d1;
-}
-
+/* =========================================
+   Hero Call-To-Action (CTA) Button
+   ========================================= */
 .cta-btn {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    padding: 15px 40px;
-    font-size: 16px;
+    background-color: var(--secondary-color); /* Matches your brand gold */
+    color: var(--primary-color); /* Deep Navy text */
+    padding: 16px 45px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 6px;
+    font-size: 1.1rem;
     font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: background 0.3s ease;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
 }
 
 .cta-btn:hover {
-    background-color: #c9965d;
+    background-color: transparent;
+    color: var(--secondary-color);
+    transform: translateY(-3px); /* Gives a nice "lift" effect when hovered */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
-
 /* =========================================
    5. Metrics Section (Homepage)
    ========================================= */
@@ -243,10 +265,6 @@ nav ul li a:hover {
     border-top: 4px solid var(--primary-color);
 }
 
-/* 
-   THE HEADSHOT IMAGE RESIZER 
-   This perfectly crops and centers your raw images into circles 
-*/
 .headshot {
     width: 150px;
     height: 150px;
@@ -254,8 +272,6 @@ nav ul li a:hover {
     border-radius: 50%;
     margin: 0 auto 20px;
     border: 3px solid var(--secondary-color);
-    
-    /* The magic code that resizes and centers the files */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -304,9 +320,9 @@ footer p {
    ========================================= */
 @media (max-width: 768px) {
     nav ul {
-        display: none; /* Hide standard menu on mobile */
+        display: none; 
     }
-    .hero h1 {
+    .hero-video-content h1 {
         font-size: 2.5rem;
     }
     .metrics {
@@ -322,28 +338,28 @@ footer p {
    11. About Us Section (Compact Split Layout)
    ========================================= */
 .about-us {
-    padding: 60px 50px; /* Reduced padding for a tighter fit */
+    padding: 60px 50px; 
     background-color: #ffffff;
 }
 
 .about-split-container {
     display: flex;
     align-items: stretch; 
-    gap: 40px; /* Tighter gap between text and image */
+    gap: 40px; 
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .about-text-content {
-    flex: 1.1; /* Gives slightly more room to the text */
+    flex: 1.1; 
     text-align: left;
     padding-right: 20px;
 }
 
 .about-text-content p {
-    font-size: 0.95rem; /* Slightly smaller font */
+    font-size: 0.95rem; 
     color: #333333; 
-    margin-bottom: 12px; /* Tighter spacing between paragraphs */
+    margin-bottom: 12px; 
     line-height: 1.5;
 }
 
@@ -353,11 +369,10 @@ footer p {
 
 .mission-vision-block h3 {
     font-size: 1.6rem;
-    margin-bottom: 8px; /* Pulls the paragraph right up to the header */
+    margin-bottom: 8px; 
     margin-top: 25px;
 }
 
-/* Two-tone header colors matching your brand */
 .text-blue {
     color: var(--primary-color);
 }
@@ -373,12 +388,10 @@ footer p {
 .property-showcase-img {
     width: 100%;
     height: 100%;
-    min-height: 400px; /* Keeps the image large but compact */
+    min-height: 400px; 
     background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1974&auto=format&fit=crop') center/cover no-repeat;
-    /* Removed border-radius and box-shadow to match the sharp, flat look of the reference image */
 }
 
-/* Responsive adjustment for mobile screens */
 @media (max-width: 900px) {
     .about-split-container {
         flex-direction: column;
@@ -391,23 +404,24 @@ footer p {
         min-height: auto;
     }
 }
+
 /* =========================================
    12. APEX CRE Banner Section
    ========================================= */
 .massive-banner {
-    background-color: var(--primary-color); /* APEX CRE Deep Navy */
+    background-color: var(--primary-color); 
     padding: 60px 20px;
     color: var(--text-light);
 }
 
 .massive-banner-container {
-    max-width: 900px; /* Keeps the text block from stretching too wide */
-    margin: 0 auto;   /* Centers the block on the page */
-    text-align: left; /* Aligns the text to the left inside the block */
+    max-width: 900px; 
+    margin: 0 auto;   
+    text-align: left; 
 }
 
 .massive-banner-container h2 {
-    color: var(--secondary-color); /* APEX CRE Gold */
+    color: var(--secondary-color); 
     font-size: 1.5rem;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -428,8 +442,8 @@ footer p {
    13. Philosophy / Disclaimer Banner
    ========================================= */
 .philosophy-banner {
-    background-color: var(--primary-color); /* APEX CRE Deep Navy */
-    color: var(--text-light); /* White text */
+    background-color: var(--primary-color); 
+    color: var(--text-light); 
     padding: 80px 20px;
     text-align: center;
 }
@@ -444,11 +458,10 @@ footer p {
     margin-bottom: 20px;
 }
 
-/* We reuse the gold class from earlier, but the word "Our" inherits the white text */
 .philosophy-banner p {
     font-size: 1rem;
     line-height: 1.6;
-    color: #e0e0e0; /* Slightly dimmed white to make it easy to read */
+    color: #e0e0e0; 
     margin: 0 auto;
     max-width: 850px;
 }
@@ -463,13 +476,12 @@ footer p {
     padding-top: 0;
 }
 
-/* Floating Gold Contact Bar */
 .footer-contact-bar {
     background-color: var(--secondary-color);
     color: var(--primary-color);
     max-width: 1100px;
     margin: 0 auto;
-    transform: translateY(-50%); /* Pulls the bar up so it floats on the edge */
+    transform: translateY(-50%); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -516,10 +528,9 @@ footer p {
     background-color: #1b263b;
 }
 
-/* Main Footer Grid Content */
 .footer-content {
     max-width: 1200px;
-    margin: -30px auto 40px; /* Adjusts spacing due to the pulled-up contact bar */
+    margin: -30px auto 40px; 
     padding: 0 20px;
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1.5fr;
@@ -566,7 +577,6 @@ footer p {
     opacity: 0.8;
 }
 
-/* Footer Link Columns */
 .footer-links {
     list-style: none;
 }
@@ -583,7 +593,6 @@ footer p {
     transition: color 0.3s ease;
 }
 
-/* Adds the little gold dot bullet point before links */
 .footer-links li a::before {
     content: "•";
     color: var(--secondary-color);
@@ -595,13 +604,11 @@ footer p {
     color: var(--secondary-color);
 }
 
-
-/* Mobile Responsiveness */
 @media (max-width: 900px) {
     .footer-contact-bar {
         flex-direction: column;
         gap: 20px;
-        transform: none; /* Removes floating overlap on small screens */
+        transform: none; 
         margin: 20px;
     }
     .footer-content {
@@ -609,18 +616,17 @@ footer p {
         margin-top: 20px;
     }
 }
-/* =========================================
-   15. Portfolio Page Specific Styles (Updated)
-   ========================================= */
 
-/* Top Metrics Bar */
+/* =========================================
+   15. Portfolio Page Specific Styles
+   ========================================= */
 .portfolio-metrics-bar {
     background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 50px 20px;
-    margin-top: 100px; /* Accounts for fixed header */
+    margin-top: 100px; 
     border-bottom: 1px solid #eaeaea;
 }
 
@@ -649,16 +655,16 @@ footer p {
     background-color: #d1d1d1;
 }
 
-/* Portfolio Grid & Cards */
 .portfolio-section {
     padding: 80px 50px;
     background-color: #f8f9fa;
 }
 
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    gap: 40px;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
+    gap: 30px;
+    justify-content: start;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -671,6 +677,9 @@ footer p {
     border: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
+    max-width: 380px; 
+    width: 100%;
+    margin: 0; 
 }
 
 .property-img {
@@ -696,7 +705,6 @@ footer p {
     margin-bottom: 25px;
 }
 
-/* Learn More Gold Button */
 .learn-more-btn {
     display: inline-block;
     background-color: var(--secondary-color);
@@ -714,7 +722,6 @@ footer p {
     background-color: #c9965d;
 }
 
-/* Bottom Data Grid inside Card */
 .card-data-grid {
     border-top: 1px solid #eaeaea;
     background-color: #ffffff;
@@ -753,7 +760,6 @@ footer p {
     text-transform: uppercase;
 }
 
-/* Responsive layout for smaller screens */
 @media (max-width: 768px) {
     .portfolio-metrics-bar {
         flex-direction: column;
@@ -766,8 +772,9 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+
 /* =========================================
-   16. Closed Deal Styles (Ribbon & Grayscale)
+   16. Closed Deal Styles
    ========================================= */
 .property-img-wrapper {
     position: relative;
@@ -775,12 +782,10 @@ footer p {
     height: 280px;
 }
 
-/* Turns the image black and white when closed */
 .closed-card .property-img {
     filter: grayscale(100%);
 }
 
-/* Red diagonal corner banner ribbon */
 .closed-ribbon {
     position: absolute;
     top: 25px;
@@ -798,12 +803,12 @@ footer p {
     z-index: 2;
 }
 
-/* Grey out the button for closed deals */
 .closed-btn {
     background-color: #b0b0b0 !important;
     color: #ffffff !important;
     cursor: not-allowed;
 }
+
 /* =========================================
    17. Contact Page Specific Styles
    ========================================= */
@@ -813,7 +818,7 @@ footer p {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px; /* Offset for fixed header */
+    margin-top: 100px; 
 }
 
 .contact-hero-header h1 {
@@ -887,7 +892,6 @@ footer p {
     box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
-/* Contact Form Section */
 .contact-form-section {
     padding: 60px 20px 100px;
     background-color: #f8f9fa;
@@ -987,7 +991,6 @@ footer p {
     color: var(--primary-color);
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
     .info-map-grid {
         grid-template-columns: 1fr;
@@ -999,6 +1002,7 @@ footer p {
         padding: 25px;
     }
 }
+
 /* =========================================
    18. Terms and Conditions Page Styles
    ========================================= */
@@ -1075,6 +1079,7 @@ footer p {
     color: var(--secondary-color);
     text-decoration: underline;
 }
+
 /* =========================================
    19. Privacy Policy Page Styles
    ========================================= */
@@ -1174,6 +1179,7 @@ footer p {
     margin-bottom: 10px;
     font-weight: 700;
 }
+
 /* =========================================
    21. Under Construction Page Styles
    ========================================= */
@@ -1230,17 +1236,17 @@ footer p {
     text-decoration: none;
 }
 
-
 /* =========================================
    23. Hero Section Large Logo
    ========================================= */
 .hero-main-logo {
-    width: 400px; /* Adjust this value to make it larger or smaller */
+    width: 400px; 
     height: 400px;
     margin-bottom: 25px;
     border-radius: 6px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
+
 /* =========================================
    24. FAQ Accordion Page Styles
    ========================================= */
@@ -1299,7 +1305,6 @@ footer p {
     background-color: #162a42;
 }
 
-/* Turns the active question gold like the reference image */
 .faq-question.active {
     background-color: #d4af37 !important;
     color: #0d1b2a !important;
@@ -1329,7 +1334,6 @@ footer p {
     border-top: 1px solid transparent;
 }
 
-/* Adds the border cleanly only when the dropdown is expanded */
 .faq-question.active + .faq-answer {
     border-top: 1px solid #eeeeee;
 }
@@ -1351,6 +1355,7 @@ footer p {
     color: var(--secondary-color);
     text-decoration: underline;
 }
+
 /* =========================================
    25. Acquisitions Page Styles
    ========================================= */
@@ -1370,7 +1375,6 @@ footer p {
     letter-spacing: 2px;
 }
 
-/* Process Timeline Section */
 .process-timeline-section {
     padding: 80px 20px;
     background-color: var(--primary-color);
@@ -1442,7 +1446,6 @@ footer p {
     line-height: 1.5;
 }
 
-/* What We're Looking For Section */
 .criteria-section {
     padding: 90px 20px;
     background-color: #ffffff;
@@ -1506,7 +1509,6 @@ footer p {
     line-height: 1.4;
 }
 
-/* Sell Property Banner Section */
 .sell-property-section {
     padding: 0 20px 100px;
     background-color: #ffffff;
@@ -1566,7 +1568,6 @@ footer p {
     color: var(--secondary-color);
 }
 
-/* Responsive adjustments */
 @media (max-width: 900px) {
     .process-grid {
         grid-template-columns: 1fr;
@@ -1584,6 +1585,7 @@ footer p {
         align-items: center;
     }
 }
+
 /* =========================================
    26. Highlights Bullet Points Styles
    ========================================= */
@@ -1615,6 +1617,7 @@ footer p {
     margin-bottom: 4px;
     line-height: 1.4;
 }
+
 /* =========================================
    27. Active Card Sizing Fix
    ========================================= */
@@ -1623,6 +1626,7 @@ footer p {
     width: 100%;
     margin: 0 auto;
 }
+
 /* =========================================
    28. Our Approach Section Styles
    ========================================= */
@@ -1691,40 +1695,26 @@ footer p {
     color: #555555;
     line-height: 1.6;
 }
+
 /* =========================================
    29. Interactive Map Styles
    ========================================= */
 #portfolio-map {
-    height: 450px;
+    height: 700px !important; 
     width: 100%;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    z-index: 1; /* Keeps the map behind your sticky dropdown menu */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 1; 
 }
 
-/* Customizes the map popup tooltip */
 .leaflet-popup-content-wrapper {
     border-radius: 4px;
     box-shadow: 0 3px 14px rgba(0,0,0,0.2);
 }
 
-/* =========================================
-   Fix for Single Cards Stretching
-   ========================================= */
-.portfolio-grid {
-    display: grid !important;
-    /* Using auto-fill instead of auto-fit prevents single items from stretching */
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
-    gap: 30px;
-    justify-content: start;
-}
-
-.portfolio-card {
-    /* Sets a hard cap on the size so it matches a standard 3-column layout */
-    max-width: 380px; 
-    width: 100%;
-    margin: 0; /* Aligns it neatly to the left */
+.leaflet-control-custom a:hover {
+    background-color: #f4f4f4 !important;
 }
 
 /* =========================================
@@ -1781,7 +1771,6 @@ footer p {
     border-color: #0d1b2a;
 }
 
-/* Helper to hide empty section headers when filtered */
 .hidden-section {
     display: none !important;
 }
@@ -1849,14 +1838,12 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
-/* Headings */
 body.dark-mode .portfolio-category-header h2,
 body.dark-mode .portfolio-card h3,
 body.dark-mode h4 {
     color: #ffffff !important;
 }
 
-/* Filter Panel */
 body.dark-mode .filter-panel {
     background-color: #1e1e1e;
     border-color: #333;
@@ -1878,7 +1865,6 @@ body.dark-mode .filter-btn.active {
     border-color: #ffc107;
 }
 
-/* Cards */
 body.dark-mode .portfolio-card {
     background-color: #1e1e1e;
     border-color: #333;
@@ -1895,14 +1881,13 @@ body.dark-mode .data-cell {
 }
 
 body.dark-mode .data-cell strong {
-    color: #ffc107; /* Gold metrics pop nicely on dark mode */
+    color: #ffc107; 
 }
 
 body.dark-mode .data-cell span {
     color: #aaa;
 }
 
-/* Modal */
 body.dark-mode .modal-content {
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -1912,7 +1897,6 @@ body.dark-mode .close-modal {
     color: #e0e0e0;
 }
 
-/* Buttons */
 body.dark-mode .secondary-btn {
     border-color: #e0e0e0;
     color: #e0e0e0;
@@ -1921,20 +1905,6 @@ body.dark-mode .secondary-btn {
 body.dark-mode .secondary-btn:hover {
     background-color: #e0e0e0;
     color: #121212;
-}
-
-/* =========================================
-   33. Map Size & Layout Adjustments
-   ========================================= */
-#portfolio-map {
-    height: 700px !important; /* Increased from 600px to give it a much larger footprint */
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.leaflet-control-custom a:hover {
-    background-color: #f4f4f4 !important;
 }
 
 body.dark-mode .leaflet-control-custom a {
@@ -1967,7 +1937,7 @@ body.dark-mode .leaflet-control-custom a {
 
 .demo-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 equal columns */
+    grid-template-columns: 1fr 1fr;
     gap: 10px 0;
     border: 1px solid #eaeaea;
     border-radius: 6px;
@@ -1978,17 +1948,14 @@ body.dark-mode .leaflet-control-custom a {
     text-align: center;
     padding: 10px 15px;
     background-color: #fcfcfc;
-    /* Creates the grid lines between the 4 cells */
     border-right: 1px solid #eaeaea;
     border-bottom: 1px solid #eaeaea;
 }
 
-/* Remove right border for the right column */
 .demo-cell:nth-child(even) {
     border-right: none;
 }
 
-/* Remove bottom border for the bottom row */
 .demo-cell:nth-child(3),
 .demo-cell:nth-child(4) {
     border-bottom: none;
@@ -2010,7 +1977,6 @@ body.dark-mode .leaflet-control-custom a {
     font-size: 0.95rem;
 }
 
-/* Dark Mode Overrides */
 body.dark-mode .demo-popup-side {
     background: #1e1e1e;
     border-color: #333;
@@ -2053,7 +2019,6 @@ body.dark-mode .demo-cell strong { color: #aaa; }
     font-size: 0.8rem;
 }
 
-/* Dark Mode Support for Instructions */
 body.dark-mode .filter-instructions {
     background-color: #252525;
     color: #bbb;
@@ -2062,115 +2027,6 @@ body.dark-mode .filter-instructions {
 
 body.dark-mode .filter-instructions strong {
     color: #e0e0e0;
-}
-
-/* =========================================
-   36. Interactive Return Calculator & Export
-   ========================================= */
-.calculator-box {
-    background-color: #f8f9fa;
-    border-top: 1px solid #eaeaea;
-    padding: 20px;
-    text-align: left;
-}
-
-.calculator-box h4 {
-    font-size: 0.85rem;
-    color: var(--primary-color, #0d1b2a);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-}
-
-.calc-slider-group {
-    margin-bottom: 15px;
-}
-
-.calc-slider-group label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.calc-slider-group label span {
-    font-weight: bold;
-    color: var(--primary-color, #0d1b2a);
-}
-
-.calc-slider-group input[type="range"] {
-    width: 100%;
-    accent-color: var(--secondary-color, #e0a96d);
-    cursor: pointer;
-}
-
-.calc-results-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    background: #ffffff;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #eaeaea;
-}
-
-.calc-result-item strong {
-    display: block;
-    font-size: 0.7rem;
-    color: #777;
-    text-transform: uppercase;
-}
-
-.calc-result-item span {
-    font-size: 0.95rem;
-    font-weight: bold;
-    color: var(--primary-color, #0d1b2a);
-}
-
-.export-pdf-btn {
-    background-color: transparent;
-    border: 1px dashed var(--primary-color, #0d1b2a);
-    color: var(--primary-color, #0d1b2a);
-    padding: 10px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 4px;
-    width: 100%;
-    margin-top: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.export-pdf-btn:hover {
-    background-color: var(--primary-color, #0d1b2a);
-    color: #fff;
-}
-
-/* Dark Mode Overrides */
-body.dark-mode .calculator-box {
-    background-color: #1a1a1a;
-    border-color: #333;
-}
-body.dark-mode .calculator-box h4,
-body.dark-mode .calc-slider-group label span,
-body.dark-mode .calc-result-item span { color: #e0e0e0; }
-body.dark-mode .calc-results-grid {
-    background: #252525;
-    border-color: #333;
-}
-body.dark-mode .export-pdf-btn {
-    border-color: #e0e0e0;
-    color: #e0e0e0;
-}
-body.dark-mode .export-pdf-btn:hover {
-    background-color: #e0e0e0;
-    color: #121212;
 }
 
 /* =========================================
@@ -2269,27 +2125,31 @@ body.dark-mode .export-pdf-btn:hover {
     color: #fff;
 }
 
-/* Dark Mode Overrides */
 body.dark-mode .calculator-box {
     background-color: #1e1e1e;
     border-color: #333;
     border-left-color: #ffc107;
 }
+
 body.dark-mode .calculator-box h4,
 body.dark-mode .calc-slider-group label span,
 body.dark-mode .calc-result-item span { color: #e0e0e0; }
+
 body.dark-mode .calc-results-grid {
     background: #252525;
     border-color: #333;
 }
+
 body.dark-mode .export-pdf-btn {
     border-color: #e0e0e0;
     color: #e0e0e0;
 }
+
 body.dark-mode .export-pdf-btn:hover {
     background-color: #e0e0e0;
     color: #121212;
 }
+
 /* =========================================
    37. Share Link Button Styles
    ========================================= */
@@ -2326,77 +2186,15 @@ body.dark-mode .share-link-btn:hover {
     background-color: #2a2a2a;
     border-color: #e0e0e0;
 }
-/* =========================================
-   38. Hero Video Background Styling
-   ========================================= */
-.hero-video-container {
-    position: relative;
-    width: 100%;
-    height: 400px; /* Adjust height as needed */
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 30px;
-}
 
-.hero-video-container video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    z-index: 1;
-}
-
-/* Dark gradient overlay so text stands out clearly over the video */
-.hero-video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(13, 27, 42, 0.75), rgba(13, 27, 42, 0.65));
-    z-index: 2;
-}
-
-.hero-video-content {
-    position: relative;
-    z-index: 3;
-    padding: 0 20px;
-    max-width: 800px;
-}
-
-.hero-video-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.hero-video-content p {
-    font-size: 1.1rem;
-    color: #e0a96d; /* Accent gold */
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
 /* =========================================
    38. Custom Accessibility Widget
    ========================================= */
-
-/* The Floating Button */
 .a11y-main-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #0056b3; /* UserWay Blue */
+    background-color: #0056b3; 
     color: #ffffff;
     width: 55px;
     height: 55px;
@@ -2416,7 +2214,6 @@ body.dark-mode .share-link-btn:hover {
     transform: scale(1.05);
 }
 
-/* The Popup Menu Panel */
 .a11y-panel {
     position: fixed;
     bottom: 85px;
@@ -2462,7 +2259,6 @@ body.dark-mode .share-link-btn:hover {
     line-height: 1;
 }
 
-/* The Grid Buttons */
 .a11y-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2504,7 +2300,6 @@ body.dark-mode .share-link-btn:hover {
     color: #0056b3;
 }
 
-/* Reset Button */
 .a11y-reset-btn {
     width: calc(100% - 40px);
     margin: 0 20px 20px;
@@ -2526,13 +2321,10 @@ body.dark-mode .share-link-btn:hover {
 /* =========================================
    39. Accessibility Effect Classes
    ========================================= */
-
-/* 1. High Contrast */
 body.a11y-high-contrast {
     filter: contrast(130%) saturate(120%);
 }
 
-/* 2. Highlight Links */
 body.a11y-highlight-links a {
     text-decoration: underline !important;
     text-decoration-color: #ffc107 !important;
@@ -2542,7 +2334,6 @@ body.a11y-highlight-links a {
     font-weight: bold !important;
 }
 
-/* 3. Bigger Text */
 body.a11y-bigger-text,
 body.a11y-bigger-text p,
 body.a11y-bigger-text span,
@@ -2551,28 +2342,26 @@ body.a11y-bigger-text li {
     font-size: 120% !important;
 }
 
-/* 4. Text Spacing */
 body.a11y-text-spacing {
     letter-spacing: 0.1em !important;
     word-spacing: 0.2em !important;
 }
 
-/* 5. Dyslexia Friendly Font */
 body.a11y-dyslexia-font,
 body.a11y-dyslexia-font * {
     font-family: 'Comic Sans MS', 'OpenDyslexic', sans-serif !important;
 }
 
-/* 6. Line Height */
 body.a11y-line-height {
     line-height: 2 !important;
 }
+
 /* =========================================
    40. Mobile Responsiveness for Accessibility Widget
    ========================================= */
 @media (max-width: 400px) {
     .a11y-panel {
-        width: calc(100% - 40px); /* Keeps a 20px buffer on both sides */
+        width: calc(100% - 40px); 
         right: 20px;
         left: 20px;
         bottom: 85px; 
@@ -2588,10 +2377,10 @@ body.a11y-line-height {
     }
     
     .a11y-option i {
-        font-size: 1.2rem; /* Slightly smaller icons for mobile */
+        font-size: 1.2rem; 
     }
     
     .a11y-option span {
-        font-size: 0.75rem; /* Keeps text on one line */
+        font-size: 0.75rem; 
     }
 }
